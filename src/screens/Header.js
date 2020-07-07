@@ -7,7 +7,7 @@ export default function Header({ navigation }) {
       <TouchableOpacity onPress={() => navigation.navigate("App")}>
         <View style={styles.flex}>
          
-          <Text style={{ marginBottom: 12 }}>A nice header</Text>
+          <Text style={{ marginBottom: 12 }}>Super Recognizer</Text>
          
         </View>
       </TouchableOpacity>

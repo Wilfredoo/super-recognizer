@@ -10,7 +10,7 @@ import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scrol
 import * as firebase from "firebase";
 import "firebase/firestore";
 
-export default function Home({ navigation }) {
+export default function SpotTheStranger({ navigation }) {
   const store = firebase.firestore();
   const currentUser = firebase.auth().currentUser.uid;
 
@@ -25,10 +25,7 @@ export default function Home({ navigation }) {
         contentContainerStyle={styles.contentContainer}
       >
         <Text style={styles.title}>
-        Games
-        </Text>
-        <Text style={styles.title}>
-        Spot the Stranger
+    This is a game called Spot the Stranger
         </Text>
       
       </KeyboardAvoidingScrollView>
