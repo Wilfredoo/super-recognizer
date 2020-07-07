@@ -12,7 +12,7 @@
     "base-64": "^0.1.0",
     "expo": "~38.0.8",
     "expo-status-bar": "^1.0.2",
-    "firebase": "^7.15.5",
+    "firebase": "7.9.0",
     "formik": "^2.1.4",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",

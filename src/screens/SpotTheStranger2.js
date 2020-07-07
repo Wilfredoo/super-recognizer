@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, TouchableOpacity} from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, Image} from "react-native";
 import Header from "./Header";
 import registerToken from "../helpers/registerNotification.js";
 import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scroll-view";
@@ -20,14 +20,18 @@ export default function SpotTheStranger({ navigation }) {
       <KeyboardAvoidingScrollView
         contentContainerStyle={styles.contentContainer}
       >
-        <Text style={styles.title}>
-          This is a game called Spot the Stranger, where you have to recognise new faces
-        </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("SpotTheStranger2")}>
-        <Text >
-          Level I
-        </Text>
-        </TouchableOpacity>
+      <Text>level I of Spot The Stranger!</Text>
+      <Text>this is your friend, remember him</Text>
+      <Image
+            style={{ width: 40, height: 40 }}
+            source={require("../../assets/icon.png")}
+          />
+      <Text>this is a stranger</Text>
+          
+          <Image
+          style={{ width: 40, height: 40 }}
+          source={require("../../assets/icon.png")}
+        />
       </KeyboardAvoidingScrollView>
     </View>
   );

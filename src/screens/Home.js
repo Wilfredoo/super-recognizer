@@ -3,6 +3,7 @@ import {
   Text,
   View,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 import Header from "./Header";
 import registerToken from "../helpers/registerNotification.js";
@@ -27,10 +28,11 @@ export default function Home({ navigation }) {
         <Text style={styles.title}>
         Games
         </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("SpotTheStranger")}>
         <Text style={styles.title}>
         Spot the Stranger
         </Text>
-      
+      </TouchableOpacity>
       </KeyboardAvoidingScrollView>
     </View>
   );

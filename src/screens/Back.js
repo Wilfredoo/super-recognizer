@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 export default function Back({ navigation, where }) {
