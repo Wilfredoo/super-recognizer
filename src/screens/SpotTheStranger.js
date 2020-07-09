@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, Button, Image } from "react-native";
 import Header from "./Header";
 import Page from "./Page";
 import * as firebase from "firebase";
@@ -10,20 +10,34 @@ export default function SpotTheStranger({ navigation }) {
   const [page, setPage] = useState(0);
   const [score, setScore] = useState(0);
 
+  // useEffect(() => console.log("yes useeffect", score), [score]);
+
   const submitAnswer = (correctAnswer) => {
-    console.log("correct answer", correctAnswer);
     correctAnswer && setScore((score) => score + 1);
-    console.log("whats the score", score);
   };
 
   const nextPage = (pageNumber) => {
-    if (pageNumber === "last") navigation.navigate("ScoreResult");
     setPage(pageNumber);
   };
 
-  select = (pageNumber, correctAnswer) => {
+  const select = (pageNumber, correctAnswer) => {
     nextPage(pageNumber);
-    submitAnswer(correctAnswer);
+ if (pageNumber !== 1) submitAnswer(correctAnswer);
+  };
+
+  const finish = () => {
+    navigateToScore();
+    saveScore();
+  };
+
+  const navigateToScore = () => {
+      navigation.navigate("ScoreResult", {
+        rightAnswers: score,
+      });
+  };
+
+  const saveScore = () => {
+    // console.log("lets save score now");
   };
 
   return (
@@ -31,34 +45,20 @@ export default function SpotTheStranger({ navigation }) {
       <Header navigation={navigation} />
       <View style={styles.container}>
         <Text style={styles.title}>Level I of Spot The Stranger!</Text>
-        {/* {page === 0 && (
-          <>
-            
-            <TouchableOpacity onPress={() => nextPage(1)}>
-              <Image
-                style={{ width: 200, height: 200 }}
-                source={{
-                  uri:
-                    "https://images-ssl.gotinder.com/59441efca2ee5120408c664c/640x800_75_a44c580a-eb18-4591-b17b-4ea8aef53276.webp",
-                }}
-              />
-            </TouchableOpacity>
-          </>
-        )} */}
-{page === 0 && (
+
+        {page === 0 && (
           <Page
-            nextPage={2}
+            nextPage={1}
+            select={select}
             photo1={
-              "https://images-ssl.gotinder.com/5ec04d287e2f3101001e69a7/640x800_75_a4df925a-f064-44c0-a698-9d47ea5f1aef.webp"
-            }
-            photo2={
-              "https://images-ssl.gotinder.com/59441efca2ee5120408c664c/640x800_75_13795fb6-35bd-4f05-bda3-c605b95869a8.webp"
+              "https://images-ssl.gotinder.com/59441efca2ee5120408c664c/640x800_75_a44c580a-eb18-4591-b17b-4ea8aef53276.webp"
             }
           />
         )}
         {page === 1 && (
           <Page
             nextPage={2}
+            select={select}
             photo1={
               "https://images-ssl.gotinder.com/5ec04d287e2f3101001e69a7/640x800_75_a4df925a-f064-44c0-a698-9d47ea5f1aef.webp"
             }
@@ -69,7 +69,9 @@ export default function SpotTheStranger({ navigation }) {
         )}
         {page === 2 && (
           <Page
-            nextPage={"last"}
+            nextPage={-1}
+            select={select}
+            finish={finish}
             photo1={
               "https://images-ssl.gotinder.com/59441efca2ee5120408c664c/640x800_75_a4472a75-dec1-4e5d-b1c5-8b13a0a93979.webp"
             }
@@ -78,6 +80,17 @@ export default function SpotTheStranger({ navigation }) {
             }
           />
         )}
+
+        {page=== -1 && 
+        <>
+        <Text>You finished the test!</Text>
+        <Button
+        onPress={finish}
+        title="Show Score"
+        color="#841584"
+      />
+      </>
+        }
       </View>
     </>
   );

@@ -4,15 +4,19 @@ import Header from "./Header";
 import "firebase/firestore";
 
 export default function ScoreResult({ navigation }) {
-  return (
+  const { rightAnswers } = navigation.state.params;
+
+    return (
     <>
       <Header navigation={navigation} />
       <View style={styles.container}>
         <Text>This is your score result</Text>
+        <Text>Total questions</Text>
+        <Text>Right answers: {JSON.stringify(rightAnswers)}</Text>
+        <Text>Keep trying!</Text>
+        <Text>You've unlocked level 2!</Text>
       </View>
     </>
   );
 }
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
