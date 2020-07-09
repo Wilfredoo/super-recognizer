@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, TouchableOpacity} from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import Header from "./Header";
 import Back from "./Back";
 import registerToken from "../helpers/registerNotification.js";
@@ -16,20 +16,20 @@ export default function GameIntro({ navigation }) {
   }, []);
 
   return (
-    <> 
-    <Back navigation={navigation} where="Home" />
+    <>
+      <Back navigation={navigation} where="Home" />
       <Header navigation={navigation} />
-    <View style={styles.container}>
-      
+      <View style={styles.container}>
         <Text style={styles.title}>
-          This is a game called Spot the Stranger, where you have to recognise new faces
+          This is a game called Spot the Stranger, where you have to recognise
+          new faces
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("SpotTheStranger")}>
-        <Text >
-          Level I
-        </Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("SpotTheStranger")}
+        >
+          <Text>Level I</Text>
         </TouchableOpacity>
-    </View>
+      </View>
     </>
   );
 }
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: 20,
-        justifyContent: "center",
+    justifyContent: "center",
     alignItems: "center",
   },
   title: {

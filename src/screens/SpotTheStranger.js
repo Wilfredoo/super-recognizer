@@ -1,40 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
-import Back from "./Back";
 import Header from "./Header";
-import registerToken from "../helpers/registerNotification.js";
-import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scroll-view";
+import Page from "./Page";
 import * as firebase from "firebase";
 import "firebase/firestore";
 
 export default function SpotTheStranger({ navigation }) {
   const store = firebase.firestore();
-  const currentUser = firebase.auth().currentUser.uid;
   const [page, setPage] = useState(0);
+  const [score, setScore] = useState(0);
 
-  useEffect(() => {
-    registerToken(currentUser);
-  }, []);
+  const submitAnswer = (correctAnswer) => {
+    console.log("correct answer", correctAnswer);
+    correctAnswer && setScore((score) => score + 1);
+    console.log("whats the score", score);
+  };
 
-  clickImage = (pageNumber) => {
-    console.log("clicked image", pageNumber);
+  const nextPage = (pageNumber) => {
+    if (pageNumber === "last") navigation.navigate("ScoreResult");
     setPage(pageNumber);
+  };
+
+  select = (pageNumber, correctAnswer) => {
+    nextPage(pageNumber);
+    submitAnswer(correctAnswer);
   };
 
   return (
     <>
       <Header navigation={navigation} />
       <View style={styles.container}>
-        <Text style={styles.title}>level I of Spot The Stranger!</Text>
-        {page === 0 && (
+        <Text style={styles.title}>Level I of Spot The Stranger!</Text>
+        {/* {page === 0 && (
           <>
-            <Text style={{ marginBottom: 20 }}>
-              this is your friend, remember her
-            </Text>
-            <Text style={{ marginBottom: 20 }}>
-              everyone else is a stranger
-            </Text>
-            <TouchableOpacity onPress={() => clickImage(1)}>
+            
+            <TouchableOpacity onPress={() => nextPage(1)}>
               <Image
                 style={{ width: 200, height: 200 }}
                 source={{
@@ -44,56 +44,39 @@ export default function SpotTheStranger({ navigation }) {
               />
             </TouchableOpacity>
           </>
+        )} */}
+{page === 0 && (
+          <Page
+            nextPage={2}
+            photo1={
+              "https://images-ssl.gotinder.com/5ec04d287e2f3101001e69a7/640x800_75_a4df925a-f064-44c0-a698-9d47ea5f1aef.webp"
+            }
+            photo2={
+              "https://images-ssl.gotinder.com/59441efca2ee5120408c664c/640x800_75_13795fb6-35bd-4f05-bda3-c605b95869a8.webp"
+            }
+          />
         )}
-
         {page === 1 && (
-          <>
-            <Text style={{ marginBottom: 20 }}>Who is the stranger?</Text>
-            <TouchableOpacity onPress={() => clickImage(2)}>
-              <Image
-                style={{ width: 200, height: 200, marginBottom: 20 }}
-                source={{
-                  uri:
-                    "https://images-ssl.gotinder.com/5ec04d287e2f3101001e69a7/640x800_75_a4df925a-f064-44c0-a698-9d47ea5f1aef.webp",
-                }}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => clickImage(2)}>
-            
-              <Image
-                style={{ width: 200, height: 200, marginBottom: 20 }}
-                source={{
-                  uri:
-                    "https://images-ssl.gotinder.com/59441efca2ee5120408c664c/640x800_75_13795fb6-35bd-4f05-bda3-c605b95869a8.webp",
-                }}
-              />
-            </TouchableOpacity>
-          </>
+          <Page
+            nextPage={2}
+            photo1={
+              "https://images-ssl.gotinder.com/5ec04d287e2f3101001e69a7/640x800_75_a4df925a-f064-44c0-a698-9d47ea5f1aef.webp"
+            }
+            photo2={
+              "https://images-ssl.gotinder.com/59441efca2ee5120408c664c/640x800_75_13795fb6-35bd-4f05-bda3-c605b95869a8.webp"
+            }
+          />
         )}
-
-{page === 2 && (
-          <>
-            <Text style={{ marginBottom: 20 }}>Who is the stranger?</Text>
-            <TouchableOpacity onPress={() => clickImage(2)}>
-              <Image
-                style={{ width: 200, height: 200, marginBottom: 20 }}
-                source={{
-                  uri:
-              "https://images-ssl.gotinder.com/59441efca2ee5120408c664c/640x800_75_a4472a75-dec1-4e5d-b1c5-8b13a0a93979.webp",
-                }}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => clickImage(2)}>
-            
-              <Image
-                style={{ width: 200, height: 200, marginBottom: 20 }}
-                source={{
-                  uri:
-              "https://images-ssl.gotinder.com/5c1c7047c6bf2d742ae75285/640x640_9720f732-3b95-4c80-b790-4fe77531bdf2.jpg",
-                }}
-              />
-            </TouchableOpacity>
-          </>
+        {page === 2 && (
+          <Page
+            nextPage={"last"}
+            photo1={
+              "https://images-ssl.gotinder.com/59441efca2ee5120408c664c/640x800_75_a4472a75-dec1-4e5d-b1c5-8b13a0a93979.webp"
+            }
+            photo2={
+              "https://images-ssl.gotinder.com/5c1c7047c6bf2d742ae75285/640x640_9720f732-3b95-4c80-b790-4fe77531bdf2.jpg"
+            }
+          />
         )}
       </View>
     </>

@@ -5,6 +5,7 @@ import Register from "./src/screens/Register";
 import Stats from "./src/screens/Stats";
 import Profile from "./src/screens/Profile";
 import GameIntro from "./src/screens/GameIntro";
+import ScoreResult from "./src/screens/ScoreResult";
 import SpotTheStranger from "./src/screens/SpotTheStranger";
 import Home from "./src/screens/Home";
 import firebaseConfigDEV from "./config/FirebaseConfigDEV";
@@ -16,7 +17,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import { decode, encode } from "base-64";
 import { YellowBox } from "react-native";
 import _ from "lodash";
-import { FontAwesome5, Ionicons, AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 
 if (!firebase.apps.length) {
   if (__DEV__) {
@@ -55,7 +56,7 @@ const DashboardTabNavigator = createBottomTabNavigator(
         title: "Profile",
         tabBarLabel: "Profile",
         tabBarIcon: ({ tintColor }) => (
-          <AntDesign name="meho" size={20} color={tintColor} />
+          <MaterialCommunityIcons name="face-profile" size={24} color="black" />
         ),
         tabBarOptions: {
           activeTintColor: "#E9446A",
@@ -69,7 +70,7 @@ const DashboardTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarLabel: "Home",
         tabBarIcon: ({ tintColor }) => (
-          <FontAwesome5 name="wine-bottle" size={20} color={tintColor} />
+          <MaterialCommunityIcons name="face-recognition" size={24} color="black" />
         ),
         tabBarOptions: {
           activeTintColor: "#E9446A",
@@ -83,7 +84,7 @@ const DashboardTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarLabel: "Stats",
         tabBarIcon: ({ tintColor }) => (
-          <Ionicons name="md-paper" size={20} color={tintColor} />
+          <Ionicons name="ios-stats" size={24} color="black" />
         ),
         tabBarOptions: {
           activeTintColor: "#E9446A",
@@ -111,7 +112,8 @@ export default createAppContainer(
       App: DashboardTabNavigator,
       Auth: AuthStack,
       GameIntro: GameIntro,
-      SpotTheStranger: SpotTheStranger
+      SpotTheStranger: SpotTheStranger,
+      ScoreResult: ScoreResult
     },
     {
       initialRouteName: "Loading",
