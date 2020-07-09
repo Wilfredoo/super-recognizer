@@ -4,8 +4,8 @@ import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
 import Stats from "./src/screens/Stats";
 import Profile from "./src/screens/Profile";
+import GameIntro from "./src/screens/GameIntro";
 import SpotTheStranger from "./src/screens/SpotTheStranger";
-import SpotTheStranger2 from "./src/screens/SpotTheStranger2";
 import Home from "./src/screens/Home";
 import firebaseConfigDEV from "./config/FirebaseConfigDEV";
 import firebaseConfigPROD from "./config/FirebaseConfigPROD";
@@ -110,9 +110,8 @@ export default createAppContainer(
       Loading: Loading,
       App: DashboardTabNavigator,
       Auth: AuthStack,
-      SpotTheStranger: SpotTheStranger,
-      SpotTheStranger2: SpotTheStranger2
-
+      GameIntro: GameIntro,
+      SpotTheStranger: SpotTheStranger
     },
     {
       initialRouteName: "Loading",
