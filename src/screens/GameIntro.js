@@ -20,14 +20,16 @@ export default function GameIntro({ navigation }) {
       <Back navigation={navigation} where="Home" />
       <Header navigation={navigation} />
       <View style={styles.container}>
-        <Text style={styles.title}>
-          This is a game called Spot the Stranger, where you have to recognise
-          new faces
+        <Text style={styles.text}>
+          Spot the Stranger
+        </Text>
+        <Text style={styles.text}>
+           In this game, you have to recognize your friends and spot the new faces that come along.
         </Text>
         <TouchableOpacity
           onPress={() => navigation.navigate("SpotTheStranger")}
         >
-          <Text>Level I</Text>
+          <Text style={styles.level}>Level I</Text>
         </TouchableOpacity>
       </View>
     </>
@@ -40,10 +42,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  title: {
+  text: {
     marginBottom: 50,
     width: 300,
     textAlign: "center",
     fontSize: 20,
   },
+  level: {
+    fontWeight: "bold",
+    fontSize: 20,
+
+  }
 });

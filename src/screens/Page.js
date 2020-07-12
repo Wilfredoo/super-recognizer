@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  Button,
 } from "react-native";
 import "firebase/firestore";
 
@@ -16,20 +15,20 @@ export default function Page({ nextPage, select, finish, photo1, photo2 }) {
         <>
           {nextPage === 1 && (
             <>
-              <Text style={{ marginBottom: 20 }}>
-                this is your friend, remember her
+              <Text style={styles.text}>
+                This is your friend, remember her
               </Text>
-              <Text style={{ marginBottom: 20 }}>
-                everyone else is a stranger
+              <Text style={styles.text}>
+                Everyone else is a stranger
               </Text>
             </>
           )}
           {nextPage !== 1 && (
-            <Text style={{ marginBottom: 20 }}>Who is the stranger?</Text>
+            <Text style={styles.text}>Who is the stranger?</Text>
           )}
           <TouchableOpacity onPress={() => select(nextPage, true)}>
             <Image
-              style={{ width: 200, height: 200, marginBottom: 20 }}
+              style={styles.image}
               source={{
                 uri: photo1,
               }}
@@ -39,7 +38,7 @@ export default function Page({ nextPage, select, finish, photo1, photo2 }) {
             <>
               <TouchableOpacity onPress={() => select(nextPage, true)}>
                 <Image
-                  style={{ width: 200, height: 200, marginBottom: 20 }}
+                  style={styles.image}
                   source={{
                     uri: photo2,
                   }}
@@ -53,4 +52,8 @@ export default function Page({ nextPage, select, finish, photo1, photo2 }) {
     </>
   );
 }
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+
+text:  { marginBottom: 20, textAlign: "center" },
+image: { width: 200, height: 200, marginBottom: 20, alignItems: "center" }
+});

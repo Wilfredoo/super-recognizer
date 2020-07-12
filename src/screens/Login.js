@@ -38,7 +38,7 @@ export default class Login extends Component {
   render() {
     return (
       <KeyboardAvoidingScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.greeting}>{`What's up, hot stuff`}</Text>
+        {/* <Text style={styles.greeting}>{`Sign in here`}</Text> */}
         <View style={styles.errorMessage}>
           {this.state.errorMessage && (
             <Text style={styles.error}>{this.state.errorMessage}</Text>
@@ -111,7 +111,7 @@ export default class Login extends Component {
                 >
                   <Text style={{ color: "#414959", fontSize: 13 }}>
                     {" "}
-                    First-timer?
+                    First time here?
                     <Text style={{ fontWeight: "500", color: "#E9446A" }}>
                       {" "}
                       Sign Up

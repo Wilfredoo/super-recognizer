@@ -9,8 +9,9 @@ export default function SpotTheStranger({ navigation }) {
   const store = firebase.firestore();
   const [page, setPage] = useState(0);
   const [score, setScore] = useState(0);
-
-  // useEffect(() => console.log("yes useeffect", score), [score]);
+  const userScores = store.collection("userScores");
+  const lastHighestScores = store.collection("lastHighestScores");
+  const currentUser = firebase.auth().currentUser.uid;
 
   const submitAnswer = (correctAnswer) => {
     correctAnswer && setScore((score) => score + 1);
@@ -28,6 +29,7 @@ export default function SpotTheStranger({ navigation }) {
   const finish = () => {
     navigateToScore();
     saveScore();
+    saveLastScore()
   };
 
   const navigateToScore = () => {
@@ -37,7 +39,21 @@ export default function SpotTheStranger({ navigation }) {
   };
 
   const saveScore = () => {
-    // console.log("lets save score now");
+    return userScores.doc(currentUser).set({
+      user: currentUser,  
+      game: "Spot The Stanger",
+      score: score,
+      time: Date.now(),
+    });
+  };
+
+  const saveLastScore = () => {
+    return lastHighestScores.doc(currentUser).set({
+      user: currentUser,  
+      game: "Spot The Stanger",
+      score: score,
+      lastUpdate: Date.now(),
+    });
   };
 
   return (
@@ -83,8 +99,9 @@ export default function SpotTheStranger({ navigation }) {
 
         {page=== -1 && 
         <>
-        <Text>You finished the test!</Text>
+        <Text style={{marginBottom: 30}}>You finished the test!</Text>
         <Button
+        
         onPress={finish}
         title="Show Score"
         color="#841584"

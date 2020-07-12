@@ -68,7 +68,7 @@ export default class Register extends Component {
   render() {
     return (
       <KeyboardAvoidingScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.greeting}>{`Ahoy Newcomer`}</Text>
+        <Text style={styles.greeting}>{`You can sign up here`}</Text>
         <View style={styles.errorMessage}>
           {this.state.errorMessage && (
             <Text style={styles.error}>{this.state.errorMessage}</Text>
