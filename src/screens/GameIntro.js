@@ -10,7 +10,7 @@ import "firebase/firestore";
 export default function GameIntro({ navigation }) {
   const store = firebase.firestore();
   const currentUser = firebase.auth().currentUser.uid;
-
+  const levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   useEffect(() => {
     registerToken(currentUser);
   }, []);
@@ -20,17 +20,25 @@ export default function GameIntro({ navigation }) {
       <Back navigation={navigation} where="Home" />
       <Header navigation={navigation} />
       <View style={styles.container}>
+        <Text style={styles.text}>Spot the Stranger</Text>
         <Text style={styles.text}>
-          Spot the Stranger
+          In this game, you have to recognize your friends and spot the new
+          faces that come along.
         </Text>
-        <Text style={styles.text}>
-           In this game, you have to recognize your friends and spot the new faces that come along.
-        </Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("SpotTheStranger")}
-        >
-          <Text style={styles.level}>Level I</Text>
-        </TouchableOpacity>
+
+        {levels.map((data) => {
+          return (
+            <>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("SpotTheStranger", { level: data })
+                }
+              >
+                <Text style={styles.level}>Level {data}</Text>
+              </TouchableOpacity>
+            </>
+          );
+        })}
       </View>
     </>
   );
@@ -51,6 +59,5 @@ const styles = StyleSheet.create({
   level: {
     fontWeight: "bold",
     fontSize: 20,
-
-  }
+  },
 });
