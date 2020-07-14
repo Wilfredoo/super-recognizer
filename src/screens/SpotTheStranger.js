@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Button, Image } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Button,
+  Image,
+} from "react-native";
 import Header from "./Header";
 import Page from "./Page";
 import * as firebase from "firebase";
@@ -12,6 +19,29 @@ export default function SpotTheStranger({ navigation }) {
   const userScores = store.collection("userScores");
   const lastHighestScores = store.collection("lastHighestScores");
   const currentUser = firebase.auth().currentUser.uid;
+  const [mainImage, setMainImage] = useState(null);
+  const [mainImagesArray, setMainImagesArray] = useState(null);
+  const [otherImages, setOtherImages] = useState(null);
+
+  const imagesRef = store.collection("tinderImages");
+
+  useEffect(() => {
+    getAllImages().then((result) => {
+      let imagesResult = [];
+      result.forEach((docSnapshot) => {
+        imagesResult.push(docSnapshot.data());
+      });
+      setMainImage(imagesResult[0].url);
+      setMainImagesArray(imagesResult[0].morePhotos);
+      setOtherImages(imagesResult[1].morePhotos);
+    });
+  }, []);
+
+  async function getAllImages() {
+    const imagesSnapshot = await imagesRef.get();
+    const imagesArray = imagesSnapshot.docs;
+    return imagesArray;
+  }
 
   const submitAnswer = (correctAnswer) => {
     correctAnswer && setScore((score) => score + 1);
@@ -23,24 +53,24 @@ export default function SpotTheStranger({ navigation }) {
 
   const select = (pageNumber, correctAnswer) => {
     nextPage(pageNumber);
- if (pageNumber !== 1) submitAnswer(correctAnswer);
+    if (pageNumber !== 1) submitAnswer(correctAnswer);
   };
 
   const finish = () => {
     navigateToScore();
     saveScore();
-    saveLastScore()
+    saveLastScore();
   };
 
   const navigateToScore = () => {
-      navigation.navigate("ScoreResult", {
-        rightAnswers: score,
-      });
+    navigation.navigate("ScoreResult", {
+      rightAnswers: score,
+    });
   };
 
   const saveScore = () => {
-    return userScores.doc(currentUser).set({
-      user: currentUser,  
+    return userScores.doc(currentUser).collection("SpotTheStranger").add({
+      user: currentUser,
       game: "Spot The Stanger",
       score: score,
       time: Date.now(),
@@ -49,7 +79,7 @@ export default function SpotTheStranger({ navigation }) {
 
   const saveLastScore = () => {
     return lastHighestScores.doc(currentUser).set({
-      user: currentUser,  
+      user: currentUser,
       game: "Spot The Stanger",
       score: score,
       lastUpdate: Date.now(),
@@ -61,53 +91,39 @@ export default function SpotTheStranger({ navigation }) {
       <Header navigation={navigation} />
       <View style={styles.container}>
         <Text style={styles.title}>Level I of Spot The Stranger!</Text>
+        {/* {mainImagesArray &&
+          mainImagesArray.map((data) => {
+            console.log("data in array", data);
+          })} */}
 
-        {page === 0 && (
-          <Page
-            nextPage={1}
-            select={select}
-            photo1={
-              "https://images-ssl.gotinder.com/59441efca2ee5120408c664c/640x800_75_a44c580a-eb18-4591-b17b-4ea8aef53276.webp"
-            }
-          />
+        {page === 0 && mainImage && (
+          <Page nextPage={1} select={select} photo1={mainImage} />
         )}
         {page === 1 && (
           <Page
             nextPage={2}
             select={select}
-            photo1={
-              "https://images-ssl.gotinder.com/5ec04d287e2f3101001e69a7/640x800_75_a4df925a-f064-44c0-a698-9d47ea5f1aef.webp"
-            }
-            photo2={
-              "https://images-ssl.gotinder.com/59441efca2ee5120408c664c/640x800_75_13795fb6-35bd-4f05-bda3-c605b95869a8.webp"
-            }
+            photo1={mainImagesArray[0]}
+            photo2={otherImages[0]}
+            correctPhoto={1}
           />
         )}
         {page === 2 && (
           <Page
             nextPage={-1}
             select={select}
-            finish={finish}
-            photo1={
-              "https://images-ssl.gotinder.com/59441efca2ee5120408c664c/640x800_75_a4472a75-dec1-4e5d-b1c5-8b13a0a93979.webp"
-            }
-            photo2={
-              "https://images-ssl.gotinder.com/5c1c7047c6bf2d742ae75285/640x640_9720f732-3b95-4c80-b790-4fe77531bdf2.jpg"
-            }
+            photo1={otherImages[1]}
+            photo2={mainImagesArray[1]}
+            correctPhoto={2}
+
           />
         )}
-
-        {page=== -1 && 
-        <>
-        <Text style={{marginBottom: 30}}>You finished the test!</Text>
-        <Button
-        
-        onPress={finish}
-        title="Show Score"
-        color="#841584"
-      />
-      </>
-        }
+        {page === -1 && (
+          <>
+            <Text style={{ marginBottom: 30 }}>You finished the test!</Text>
+            <Button onPress={finish} title="Show Score" color="#841584" />
+          </>
+        )}
       </View>
     </>
   );
