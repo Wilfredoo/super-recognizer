@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import "firebase/firestore";
 
-
-
-export default function Page({ nextPage, currentPage }) {
+export default function Page({ answer, nextPage, currentPage, photoToShow, finish }) {
   return (
     <>
       <View>
@@ -15,11 +13,10 @@ export default function Page({ nextPage, currentPage }) {
               <Image
                 style={styles.image}
                 source={{
-                  uri:
-                    "https://i.pinimg.com/originals/07/86/ab/0786abef4efc8a0845c43e1599a4bf90.jpg",
+                  uri: photoToShow.url,
                 }}
               />
-               <TouchableOpacity onPress={() => nextPage()}>
+              <TouchableOpacity onPress={() => nextPage()}>
                 <Text
                   style={{
                     textAlign: "center",
@@ -33,30 +30,16 @@ export default function Page({ nextPage, currentPage }) {
               </TouchableOpacity>
             </>
           )}
-
           {currentPage >= 1 && (
             <>
               <Text style={styles.text}>Is this a stranger?</Text>
               <Image
                 style={styles.image}
                 source={{
-                  uri:
-                    "https://i.pinimg.com/originals/07/86/ab/0786abef4efc8a0845c43e1599a4bf90.jpg",
+                  uri: photoToShow.url,
                 }}
               />
-              <TouchableOpacity onPress={() => nextPage()}>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    margin: 20,
-                    padding: 10,
-                    backgroundColor: "gray",
-                  }}
-                >
-                  No
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => nextPage()}>
+              <TouchableOpacity onPress={() => answer("YES",photoToShow.rightAnswer)}>
                 <Text
                   style={{
                     textAlign: "center",
@@ -68,8 +51,21 @@ export default function Page({ nextPage, currentPage }) {
                   Yes
                 </Text>
               </TouchableOpacity>
+              <TouchableOpacity onPress={() => answer("NO",photoToShow.rightAnswer)}>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    margin: 20,
+                    padding: 10,
+                    backgroundColor: "gray",
+                  }}
+                >
+                  No
+                </Text>
+              </TouchableOpacity>
             </>
           )}
+    
         </>
       </View>
     </>

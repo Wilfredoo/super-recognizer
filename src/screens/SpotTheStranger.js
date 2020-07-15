@@ -19,7 +19,6 @@ export default function SpotTheStranger({ navigation }) {
   const imagesRef = store.collection("tinderImages");
   const [currentPage, setCurrentPage] = useState(0);
 
-
   const otterPic1 =
   "https://dkt6rvnu67rqj.cloudfront.net/cdn/ff/5MLOa-xy8Q1evoAxxYRZ1EwmA-P1NhAdaRANh4z_30c/1579533887/public/styles/max_1000/public/media/ca_-_en_files/1023627.jpg?itok=4kCP_NEo";
 const otterPic2 =
@@ -41,11 +40,12 @@ const picsArray = [
   { url: otterPic2, seen: false, rightAnswer: true },
   { url: otterPic3, seen: false, rightAnswer: true },
   { url: platypusPic, seen: false, rightAnswer: false },
+  { url: beaverPic, seen: false, rightAnswer: false },
   { url: racoonPic, seen: false, rightAnswer: false },
   { url: platypusPic, seen: false, rightAnswer: false },
 ];
 
-  const pageArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1];
+  const pageArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   useEffect(() => {
     getAllImages().then((result) => {
       let imagesResult = [];
@@ -61,20 +61,26 @@ const picsArray = [
     return imagesArray;
   }
 
-  const submitAnswer = (correctAnswer) => {
-    correctAnswer && setScore((score) => score + 1);
+  const increaseScore = () => {
+    setScore((score) => score + 1);
   };
 
   const nextPage = () => {
     setCurrentPage(currentPage => currentPage + 1);
   };
 
-  const select = (pageNumber, correctAnswer) => {
-    nextPage(pageNumber);
-    if (pageNumber !== 1) submitAnswer(correctAnswer);
+  const answer = async(answer, correctPicture) => {
+    if (answer === "YES" && !correctPicture) increaseScore();
+    if (answer === "NO" && correctPicture) increaseScore();
+    if (await currentPage === 10) {
+      console.log("time to finish...")
+      finish()
+    }
+    nextPage();
   };
 
   const finish = () => {
+    console.log("finish was called")
     navigateToScore();
     saveScore();
     saveLastScore();
@@ -104,8 +110,8 @@ const picsArray = [
     });
   };
 
-  const arrayOfPages = pageArray.map((data) => {
-    return <Page nextPage={nextPage} currentPage={currentPage} />;
+  const arrayOfPages = pageArray.map(() => {
+    return <Page answer={answer}  nextPage={nextPage} currentPage={currentPage} photoToShow={picsArray[currentPage]} finish={finish} />;
   });
 
   return (
@@ -116,7 +122,6 @@ const picsArray = [
           Spot The Stranger! {"\n"}
           {"\n"}Level {level}
         </Text>
-        {console.log("current page is...", currentPage)}
         {arrayOfPages[currentPage]}
       </View>
     </>

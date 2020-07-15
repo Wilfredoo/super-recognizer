@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
+import React from "react";
+import { Text, View, StyleSheet, TouchableOpacity} from "react-native";
 import Header from "./Header";
 import "firebase/firestore";
 
@@ -9,27 +9,51 @@ export default function ScoreResult({ navigation }) {
     <>
       <Header navigation={navigation} />
       <View style={styles.container}>
-        <Text style={styles.text}>This is your score result</Text>
+      {rightAnswers <= 7 &&
+         <Text style={styles.text}>You didn't make it (yet)</Text>}
+         {rightAnswers >= 7 &&
+         <Text style={styles.text}>You've unlocked level...</Text>}
+        <Text style={styles.text}>Your score:</Text>
         <Text style={styles.text}>Total questions: 10</Text>
         <Text style={styles.text}>
           Right answers: {JSON.stringify(rightAnswers)}
         </Text>
-        <Text style={styles.text}>Keep trying!</Text>
+        {rightAnswers <= 7 &&
+        <>
+        <TouchableOpacity onPress={() => navigation.navigate("GameIntro")}>
+        <Text
+          style={{
+            textAlign: "center",
+            margin: 20,
+            padding: 10,
+            backgroundColor: "gray",
+          }}
+        >
+          Try Again
+        </Text>
+      </TouchableOpacity>
+      </>
+        }
+        
+        {rightAnswers >= 7 && 
+        <>
         <Text style={styles.text}>You've unlocked level 2!</Text>
-        <View style={{ margin: 15 }}>
-          <Button
-            onPress={() => console.log("next level")}
-            title="Try Again"
-            color="#841584"
-          />
-        </View>
-        <View style={{ margin: 15 }}>
-          <Button
-            onPress={() => console.log("next level")}
-            title="Play Level 2"
-            color="#841584"
-          />
-        </View>
+         <TouchableOpacity onPress={() => navigation.navigate("GameIntro")}>
+         <Text
+           style={{
+             textAlign: "center",
+             margin: 20,
+             padding: 10,
+             backgroundColor: "gray",
+           }}
+         >
+           Next Level
+         </Text>
+       </TouchableOpacity>
+       </>
+        }
+        
+       
       </View>
     </>
   );
