@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import Header from "./Header";
 import Back from "./Back";
-import registerToken from "../helpers/registerNotification.js";
-import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scroll-view";
 import * as firebase from "firebase";
 import "firebase/firestore";
 
@@ -11,9 +9,7 @@ export default function GameIntro({ navigation }) {
   const store = firebase.firestore();
   const currentUser = firebase.auth().currentUser.uid;
   const levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  useEffect(() => {
-    registerToken(currentUser);
-  }, []);
+  const { highestScore } = navigation.state.params;
 
   return (
     <>
@@ -25,16 +21,17 @@ export default function GameIntro({ navigation }) {
           In this game, you have to recognize your friends and spot the new
           faces that come along.
         </Text>
-
-        {levels.map((data) => {
+        {levels.map((data, index) => {
           return (
             <>
               <TouchableOpacity
+                key={index}
+                disabled={false}
                 onPress={() =>
                   navigation.navigate("SpotTheStranger", { level: data })
                 }
               >
-                <Text style={styles.level}>Level {data}</Text>
+                <Text style={(index > ((highestScore.highestScore - 7) / 10)) ? styles.disabled : styles.enabled}>Level{data}</Text>
               </TouchableOpacity>
             </>
           );
@@ -43,6 +40,7 @@ export default function GameIntro({ navigation }) {
     </>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -56,8 +54,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
   },
-  level: {
+  enabled: {
     fontWeight: "bold",
     fontSize: 20,
   },
+  disabled: {
+    color: "gray",
+    fontSize: 20,
+  }
 });

@@ -13,11 +13,26 @@ import "firebase/firestore";
 
 export default function Home({ navigation }) {
   const store = firebase.firestore();
+  const highestScoreRef = store.collection("lastHighestScores");
   const currentUser = firebase.auth().currentUser.uid;
+  const [highestScore, setHighestScore] = useState(100);
 
   useEffect(() => {
     registerToken(currentUser);
+    getHighestScores().then((result) => {
+      result.forEach((docSnapshot) => {
+        setHighestScore(docSnapshot.data());
+      });
+    });
   }, []);
+
+  async function getHighestScores() {
+    const highestScoresSnapshot = await highestScoreRef
+      .where("user", "==", currentUser)
+      .where("game", "==", "SpotTheStranger")
+      .get();
+    return highestScoresSnapshot.docs;
+  }
 
   return (
     <View style={styles.container}>
@@ -28,7 +43,7 @@ export default function Home({ navigation }) {
         <Text style={styles.title}>
         Games
         </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("GameIntro")}>
+          <TouchableOpacity onPress={() => navigation.navigate("GameIntro", { highestScore})}>
         <Text style={styles.title}>
         Spot the Stranger
         </Text>
@@ -37,6 +52,7 @@ export default function Home({ navigation }) {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
