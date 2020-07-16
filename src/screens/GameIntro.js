@@ -9,7 +9,24 @@ export default function GameIntro({ navigation }) {
   const store = firebase.firestore();
   const currentUser = firebase.auth().currentUser.uid;
   const levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const { highestScore } = navigation.state.params;
+  const highestScoreRef = store.collection("lastHighestScores");
+  const [highestScore, setHighestScore] = useState(0);
+
+  useEffect(() => {
+    getHighestScores().then((result) => {
+      result.forEach((docSnapshot) => {
+        setHighestScore(docSnapshot.data());
+      });
+    });
+  }, []);
+
+  async function getHighestScores() {
+    const highestScoresSnapshot = await highestScoreRef
+      .where("user", "==", currentUser)
+      .where("game", "==", "SpotTheStranger")
+      .get();
+    return highestScoresSnapshot.docs;
+  }
 
   return (
     <>
@@ -21,17 +38,17 @@ export default function GameIntro({ navigation }) {
           In this game, you have to recognize your friends and spot the new
           faces that come along.
         </Text>
-        {levels.map((data, index) => {
+        {levels.map((data, i) => {
           return (
             <>
               <TouchableOpacity
-                key={index}
-                disabled={false}
+                key={i}
+                disabled={(i > ((highestScore.highestScore - 7) / 10)) ? true : false}
                 onPress={() =>
                   navigation.navigate("SpotTheStranger", { level: data })
                 }
               >
-                <Text style={(index > ((highestScore.highestScore - 7) / 10)) ? styles.disabled : styles.enabled}>Level{data}</Text>
+                <Text style={(i > ((highestScore.highestScore - 7) / 10)) ? styles.disabled : styles.enabled}>Level{data}</Text>
               </TouchableOpacity>
             </>
           );
