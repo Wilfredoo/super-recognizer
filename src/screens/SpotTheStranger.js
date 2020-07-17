@@ -11,11 +11,12 @@ export default function SpotTheStranger({ navigation }) {
   const [score, setScore] = useState(0);
   const [levelUnlocked, setLevelUnlocked] = useState(false);
   const userScores = store.collection("userScores");
-  const lastHighestScoresRef = store.collection("lastHighestScores").doc("hnfxxnjPCMeYqYRIilMzGcvZ5fk2");
+  const lastHighestScoresRef = store
+    .collection("lastHighestScores")
+    .doc("hnfxxnjPCMeYqYRIilMzGcvZ5fk2");
   const currentUser = firebase.auth().currentUser.uid;
   const imagesRef = store.collection("tinderImages");
   const [currentPage, setCurrentPage] = useState(0);
-  const increment = firebase.firestore.FieldValue.increment(10);
 
   const otterPic1 =
     "https://dkt6rvnu67rqj.cloudfront.net/cdn/ff/5MLOa-xy8Q1evoAxxYRZ1EwmA-P1NhAdaRANh4z_30c/1579533887/public/styles/max_1000/public/media/ca_-_en_files/1023627.jpg?itok=4kCP_NEo";
@@ -43,14 +44,18 @@ export default function SpotTheStranger({ navigation }) {
     { url: platypusPic, seen: false, rightAnswer: false },
   ];
 
-  const pageArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const pageArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   useEffect(() => {
+    let mounted = true;
     getAllImages().then((result) => {
-      let imagesResult = [];
-      result.forEach((docSnapshot) => {
-        imagesResult.push(docSnapshot.data());
-      });
+      if (mounted) {
+        let imagesResult = [];
+        result.forEach((docSnapshot) => {
+          imagesResult.push(docSnapshot.data());
+        });
+      }
     });
+    return () => (mounted = false);
   }, []);
 
   async function getAllImages() {
@@ -59,8 +64,8 @@ export default function SpotTheStranger({ navigation }) {
     return imagesArray;
   }
 
-  const increaseScore = () => {
-    setScore((score) => score + 1);
+  const increaseScore = async () => {
+    setScore(score + 1);
   };
 
   const nextPage = () => {
@@ -68,33 +73,24 @@ export default function SpotTheStranger({ navigation }) {
   };
 
   const answer = async (answer, correctPicture) => {
-    if (answer === "YES" && !correctPicture) increaseScore();
-    if (answer === "NO" && correctPicture) increaseScore();
+    if (answer === "YES" && !correctPicture) await increaseScore();
+    if (answer === "NO" && correctPicture) await increaseScore();
     if ((await currentPage) === 10) {
-      console.log("time to finish...");
       finish();
     }
     nextPage();
   };
 
   const finish = () => {
-    console.log("finish was called");
-    navigateToScore();
     saveScore();
-    // saveLastScore();
-    unlockNextLevel()
+    unlockNextLevel();
   };
 
-  const navigateToScore = () => {
-    navigation.navigate("ScoreResult", {
-      rightAnswers: score,
-    });
-  };
 
   const saveScore = () => {
     return userScores.doc(currentUser).collection("SpotTheStranger").add({
       user: currentUser,
-      game: "Spot The Stanger",
+      game: "SpotTheStanger",
       score: score,
       time: Date.now(),
     });
@@ -108,27 +104,19 @@ export default function SpotTheStranger({ navigation }) {
   };
 
   const increaseHighestScore = () => {
-    console.log("lets increase highest score")
-    lastHighestScoresRef.update({ highestScore: increment });
+    const scoreToUpdate = (level) * 10 + score
+    lastHighestScoresRef.update({"highestScore": scoreToUpdate })
   };
-
-  // const saveLastScore = () => {
-  //   return lastHighestScoresRef.doc(currentUser).set({
-  //     user: currentUser,
-  //     game: "Spot The Stanger",
-  //     score: score,
-  //     lastUpdate: Date.now(),
-  //   });
-  // };
 
   const arrayOfPages = pageArray.map(() => {
     return (
       <Page
+      navigation={navigation}
         answer={answer}
         nextPage={nextPage}
         currentPage={currentPage}
         photoToShow={picsArray[currentPage]}
-        finish={finish}
+        score={score}
       />
     );
   });

@@ -1,25 +1,22 @@
-import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import Header from "./Header";
+import { Text, View, StyleSheet, TouchableOpacity, ScrollViewComponent } from "react-native";
+import React, { useState, useEffect } from "react";
 import "firebase/firestore";
 
-export default function ScoreResult({ navigation }) {
-  const { rightAnswers } = navigation.state.params;
+export default function ScoreResult({ navigation, score }) {
   return (
     <>
-      <Header navigation={navigation} />
       <View style={styles.container}>
-        {rightAnswers <= 7 && (
+        {ScrollViewComponent <= 7 && (
           <Text style={styles.title}>You didn't make it (yet)</Text>
         )}
-        {rightAnswers >= 7 && (
+        {score >= 7 && (
           <Text style={styles.text}>You've unlocked level...</Text>
         )}
         <Text style={styles.text}>
-          Right answers: {JSON.stringify(rightAnswers)}
+          Right answers: {JSON.stringify(score)}
         </Text>
         <Text style={styles.text}>Total questions: 10</Text>
-        {rightAnswers <= 7 && (
+        {score <= 7 && (
           <>
             <TouchableOpacity onPress={() => navigation.navigate("GameIntro")}>
               <Text
@@ -35,7 +32,7 @@ export default function ScoreResult({ navigation }) {
             </TouchableOpacity>
           </>
         )}
-        {rightAnswers >= 7 && (
+        {score >= 7 && (
           <>
             <Text style={styles.text}>You've unlocked level 2!</Text>
             <TouchableOpacity onPress={() => navigation.navigate("GameIntro")}>
@@ -52,8 +49,15 @@ export default function ScoreResult({ navigation }) {
             </TouchableOpacity>
           </>
         )}
-
-        <Text style={{ textAlign: "center", fontStyle:"italic", position: "absolute", bottom: 50, width: "90%" }}>
+        <Text
+          style={{
+            textAlign: "center",
+            fontStyle: "italic",
+            position: "absolute",
+            bottom: 50,
+            width: "90%",
+          }}
+        >
           "It's not the size of the dog in the fight, it's the size of the fight
           in the dog"
         </Text>
@@ -75,6 +79,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 30
+    marginBottom: 30,
   },
 });

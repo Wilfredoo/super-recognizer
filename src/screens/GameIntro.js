@@ -13,11 +13,16 @@ export default function GameIntro({ navigation }) {
   const [highestScore, setHighestScore] = useState(0);
 
   useEffect(() => {
+    let mounted = true;
+
     getHighestScores().then((result) => {
-      result.forEach((docSnapshot) => {
-        setHighestScore(docSnapshot.data());
-      });
+      if (mounted) {
+        result.forEach((docSnapshot) => {
+          setHighestScore(docSnapshot.data());
+        });
+      }
     });
+    return () => (mounted = false);
   }, []);
 
   async function getHighestScores() {
@@ -42,13 +47,22 @@ export default function GameIntro({ navigation }) {
           return (
             <>
               <TouchableOpacity
-                key={i}
-                disabled={(i > ((highestScore.highestScore - 7) / 10)) ? true : false}
+                disabled={
+                  i > (highestScore.highestScore - 7) / 10 ? true : false
+                }
                 onPress={() =>
                   navigation.navigate("SpotTheStranger", { level: data })
                 }
               >
-                <Text style={(i > ((highestScore.highestScore - 7) / 10)) ? styles.disabled : styles.enabled}>Level{data}</Text>
+                <Text
+                  style={
+                    i > (highestScore.highestScore - 7) / 10
+                      ? styles.disabled
+                      : styles.enabled
+                  }
+                >
+                  Level{data}
+                </Text>
               </TouchableOpacity>
             </>
           );
@@ -78,5 +92,5 @@ const styles = StyleSheet.create({
   disabled: {
     color: "gray",
     fontSize: 20,
-  }
+  },
 });

@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import "firebase/firestore";
+import ScoreResult from "./ScoreResult"
 
-export default function Page({ answer, nextPage, currentPage, photoToShow, finish }) {
+export default function Page({
+  navigation,
+  answer,
+  nextPage,
+  currentPage,
+  photoToShow,
+  score,
+}) {
   return (
     <>
       <View>
@@ -30,7 +38,7 @@ export default function Page({ answer, nextPage, currentPage, photoToShow, finis
               </TouchableOpacity>
             </>
           )}
-          {currentPage >= 1 && (
+          {currentPage >= 1 && currentPage <= 10 && (
             <>
               <Text style={styles.text}>Is this a stranger?</Text>
               <Image
@@ -39,7 +47,9 @@ export default function Page({ answer, nextPage, currentPage, photoToShow, finis
                   uri: photoToShow.url,
                 }}
               />
-              <TouchableOpacity onPress={() => answer("YES",photoToShow.rightAnswer)}>
+              <TouchableOpacity
+                onPress={() => answer("YES", photoToShow.rightAnswer)}
+              >
                 <Text
                   style={{
                     textAlign: "center",
@@ -51,7 +61,9 @@ export default function Page({ answer, nextPage, currentPage, photoToShow, finis
                   Yes
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => answer("NO",photoToShow.rightAnswer)}>
+              <TouchableOpacity
+                onPress={() => answer("NO", photoToShow.rightAnswer)}
+              >
                 <Text
                   style={{
                     textAlign: "center",
@@ -63,9 +75,12 @@ export default function Page({ answer, nextPage, currentPage, photoToShow, finis
                   No
                 </Text>
               </TouchableOpacity>
+        
             </>
           )}
-    
+            {currentPage === 11 && (
+            <ScoreResult navigation={navigation} score={score}/>
+          )}
         </>
       </View>
     </>

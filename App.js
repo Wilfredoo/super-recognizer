@@ -56,11 +56,11 @@ const DashboardTabNavigator = createBottomTabNavigator(
         title: "Profile",
         tabBarLabel: "Profile",
         tabBarIcon: ({ tintColor }) => (
-          <MaterialCommunityIcons name="face-profile" size={24} color="black" />
+          <MaterialCommunityIcons name="face-profile" size={24} color={tintColor} />
         ),
         tabBarOptions: {
-          activeTintColor: "#E9446A",
-          inactiveTintColor: "gray",
+          activeTintColor: "#1b6ca8",
+          inactiveTintColor: "black",
         },
       },
     },
@@ -70,11 +70,11 @@ const DashboardTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarLabel: "Home",
         tabBarIcon: ({ tintColor }) => (
-          <MaterialCommunityIcons name="face-recognition" size={24} color="black" />
+          <MaterialCommunityIcons name="face-recognition" size={24} color={tintColor} />
         ),
         tabBarOptions: {
-          activeTintColor: "#E9446A",
-          inactiveTintColor: "gray",
+          activeTintColor: "#1b6ca8",
+          inactiveTintColor: "black",
         },
       },
     },
@@ -84,11 +84,11 @@ const DashboardTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarLabel: "Stats",
         tabBarIcon: ({ tintColor }) => (
-          <Ionicons name="ios-stats" size={24} color="black" />
+          <Ionicons name="ios-stats" size={24} color={tintColor} />
         ),
         tabBarOptions: {
-          activeTintColor: "#E9446A",
-          inactiveTintColor: "gray",
+          activeTintColor: "#1b6ca8",
+          inactiveTintColor: "black",
         },
       },
     },
