@@ -10,10 +10,9 @@ export default function SpotTheStranger({ navigation }) {
   const store = firebase.firestore();
   const [score, setScore] = useState(0);
   const [levelUnlocked, setLevelUnlocked] = useState(false);
+  const [lastHighestScore, setLastHighestScore] = useState(0);
   const userScores = store.collection("userScores");
-  const lastHighestScoresRef = store
-    .collection("lastHighestScores")
-    .doc("hnfxxnjPCMeYqYRIilMzGcvZ5fk2");
+  const lastHighestScoresRef = store.collection("lastHighestScores");
   const currentUser = firebase.auth().currentUser.uid;
   const imagesRef = store.collection("tinderImages");
   const [currentPage, setCurrentPage] = useState(0);
@@ -46,22 +45,30 @@ export default function SpotTheStranger({ navigation }) {
 
   const pageArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   useEffect(() => {
-    let mounted = true;
-    getAllImages().then((result) => {
-      if (mounted) {
-        let imagesResult = [];
-        result.forEach((docSnapshot) => {
-          imagesResult.push(docSnapshot.data());
-        });
-      }
-    });
-    return () => (mounted = false);
+    getAllImages();
+    getLastHighestScore();
   }, []);
 
   async function getAllImages() {
     const imagesSnapshot = await imagesRef.get();
     const imagesArray = imagesSnapshot.docs;
-    return imagesArray;
+    let mounted = true;
+    if (mounted) {
+      let imagesResult = [];
+      imagesArray.forEach((docSnapshot) => {
+        imagesResult.push(docSnapshot.data());
+      });
+    }
+    return () => (mounted = false);
+  }
+
+  async function getLastHighestScore() {
+    const highestScoreSnapshot = await lastHighestScoresRef.get();
+    const highestScoreArray = highestScoreSnapshot.docs;
+    highestScoreArray.forEach((docSnapshot) => {
+      console.log("snap hgih", docSnapshot.data())
+      setLastHighestScore(docSnapshot.data());
+    });
   }
 
   const increaseScore = async () => {
@@ -86,7 +93,6 @@ export default function SpotTheStranger({ navigation }) {
     unlockNextLevel();
   };
 
-
   const saveScore = () => {
     return userScores.doc(currentUser).collection("SpotTheStranger").add({
       user: currentUser,
@@ -104,14 +110,17 @@ export default function SpotTheStranger({ navigation }) {
   };
 
   const increaseHighestScore = () => {
-    const scoreToUpdate = (level) * 10 + score
-    lastHighestScoresRef.update({"highestScore": scoreToUpdate })
+    const scoreToUpdate = level * 10 + score;
+    lastHighestScoresRef
+      .where("game", "==", "SpotTheStranger")
+      .update({ highestScore: 111 });
   };
 
-  const arrayOfPages = pageArray.map(() => {
+  const arrayOfPages = pageArray.map((data, i) => {
     return (
       <Page
-      navigation={navigation}
+        key={i}
+        navigation={navigation}
         answer={answer}
         nextPage={nextPage}
         currentPage={currentPage}

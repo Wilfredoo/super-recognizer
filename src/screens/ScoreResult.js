@@ -6,7 +6,7 @@ export default function ScoreResult({ navigation, score }) {
   return (
     <>
       <View style={styles.container}>
-        {ScrollViewComponent <= 7 && (
+        {ScrollViewComponent <= 6 && (
           <Text style={styles.title}>You didn't make it (yet)</Text>
         )}
         {score >= 7 && (
@@ -16,7 +16,7 @@ export default function ScoreResult({ navigation, score }) {
           Right answers: {JSON.stringify(score)}
         </Text>
         <Text style={styles.text}>Total questions: 10</Text>
-        {score <= 7 && (
+        {score <= 6 && (
           <>
             <TouchableOpacity onPress={() => navigation.navigate("GameIntro")}>
               <Text
@@ -49,6 +49,18 @@ export default function ScoreResult({ navigation, score }) {
             </TouchableOpacity>
           </>
         )}
+           <TouchableOpacity onPress={() => navigation.navigate("GameIntro")}>
+              <Text
+                style={{
+                  textAlign: "center",
+                  margin: 20,
+                  padding: 10,
+                  backgroundColor: "gray",
+                }}
+              >
+                Back to Levels
+              </Text>
+            </TouchableOpacity>
         <Text
           style={{
             textAlign: "center",

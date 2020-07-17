@@ -14,7 +14,6 @@ export default function GameIntro({ navigation }) {
 
   useEffect(() => {
     let mounted = true;
-
     getHighestScores().then((result) => {
       if (mounted) {
         result.forEach((docSnapshot) => {
@@ -47,6 +46,7 @@ export default function GameIntro({ navigation }) {
           return (
             <>
               <TouchableOpacity
+                key={i}
                 disabled={
                   i > (highestScore.highestScore - 7) / 10 ? true : false
                 }
