@@ -33,11 +33,13 @@ export default function SpotTheStranger({ navigation }) {
     { url: otterPic1, seen: false, rightAnswer: true },
     { url: otterPic2, seen: false, rightAnswer: true },
     { url: otterPic3, seen: false, rightAnswer: true },
-    { url: otterPic2, seen: false, rightAnswer: true },
-    { url: otterPic3, seen: false, rightAnswer: true },
     { url: beaverPic, seen: false, rightAnswer: false },
     { url: racoonPic, seen: false, rightAnswer: false },
+    { url: otterPic2, seen: false, rightAnswer: true },
+
     { url: platypusPic, seen: false, rightAnswer: false },
+    { url: otterPic3, seen: false, rightAnswer: true },
+
     { url: beaverPic, seen: false, rightAnswer: false },
     { url: racoonPic, seen: false, rightAnswer: false },
     { url: platypusPic, seen: false, rightAnswer: false },
@@ -66,7 +68,6 @@ export default function SpotTheStranger({ navigation }) {
     const highestScoreSnapshot = await lastHighestScoresRef.get();
     const highestScoreArray = highestScoreSnapshot.docs;
     highestScoreArray.forEach((docSnapshot) => {
-      console.log("snap hgih", docSnapshot.data())
       setLastHighestScore(docSnapshot.data());
     });
   }
@@ -103,17 +104,19 @@ export default function SpotTheStranger({ navigation }) {
   };
 
   const unlockNextLevel = () => {
-    if (score >= 7) {
+    if (score >= 6) {
       setLevelUnlocked(true);
       increaseHighestScore();
     }
   };
 
   const increaseHighestScore = () => {
+    if (level> lastHighestScore.highestScore / 10) {
     const scoreToUpdate = level * 10 + score;
     lastHighestScoresRef
-      .where("game", "==", "SpotTheStranger")
-      .update({ highestScore: 111 });
+      .doc(currentUser)
+      .update({ highestScore: scoreToUpdate });
+    }
   };
 
   const arrayOfPages = pageArray.map((data, i) => {

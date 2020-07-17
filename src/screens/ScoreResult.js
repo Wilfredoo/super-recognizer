@@ -62,13 +62,7 @@ export default function ScoreResult({ navigation, score }) {
               </Text>
             </TouchableOpacity>
         <Text
-          style={{
-            textAlign: "center",
-            fontStyle: "italic",
-            position: "absolute",
-            bottom: 50,
-            width: "90%",
-          }}
+          style={styles.quote}
         >
           "It's not the size of the dog in the fight, it's the size of the fight
           in the dog"
@@ -81,9 +75,7 @@ export default function ScoreResult({ navigation, score }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 20,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "center"
   },
   text: {
     marginBottom: 10,
@@ -93,4 +85,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 30,
   },
+  quote: {
+    textAlign: "center",
+    fontStyle: "italic",
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+  }
 });

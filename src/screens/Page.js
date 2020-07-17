@@ -17,7 +17,7 @@ export default function Page({
         <>
           {currentPage === 0 && (
             <>
-              <Text style={styles.text}>This is your friend, remember her</Text>
+              <Text style={styles.text}>This is an Otter</Text>
               <Image
                 style={styles.image}
                 source={{
@@ -40,7 +40,7 @@ export default function Page({
           )}
           {currentPage >= 1 && currentPage <= 10 && (
             <>
-              <Text style={styles.text}>Is this a stranger?</Text>
+              <Text style={styles.text}>If an otter, press NO. If it is not an otter, press YES.</Text>
               <Image
                 style={styles.image}
                 source={{
