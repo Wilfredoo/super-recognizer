@@ -11,8 +11,31 @@ export default function GameIntro({ navigation }) {
   const levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const highestScoreRef = store.collection("lastHighestScores");
   const [highestScore, setHighestScore] = useState(0);
+  const [picArrayState, setPicArrayState] = useState(null);
+  const imagesRef = store.collection("rodents");
+
+  async function getAllImages() {
+    const imagesSnapshot = await imagesRef.get();
+    const imagesArray = imagesSnapshot.docs;
+    let animalPics = [];
+    let index10 = 0;
+    imagesArray.forEach((docSnapshot, index) => {
+     for (let i = 0; i < docSnapshot.data().photos.length; i++) {
+      animalPics.push({
+        url: docSnapshot.data().photos[i],
+        seen: false,
+        rightAnswer: false,
+      });
+      if (index10 === 10) break
+      index10 = index10 + 1
+     }
+     
+    });
+    setPicArrayState(animalPics);
+  }
 
   useEffect(() => {
+    getAllImages();
     let mounted = true;
     getHighestScores().then((result) => {
       if (mounted) {
@@ -51,7 +74,7 @@ export default function GameIntro({ navigation }) {
                   i > (highestScore.highestScore - 7) / 10 ? true : false
                 }
                 onPress={() =>
-                  navigation.navigate("SpotTheStranger", { level: data })
+                  navigation.navigate("SpotTheStranger", { level: data, picArrayState:picArrayState })
                 }
               >
                 <Text

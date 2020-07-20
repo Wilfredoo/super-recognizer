@@ -40,6 +40,7 @@ export default function Page({
           )}
           {currentPage >= 1 && currentPage <= 10 && (
             <>
+
               <Text style={styles.text}>If an otter, press NO. If it is not an otter, press YES.</Text>
               <Image
                 style={styles.image}
@@ -79,7 +80,11 @@ export default function Page({
             </>
           )}
             {currentPage === 11 && (
+              <>
+            {console.log("score")}
+
             <ScoreResult navigation={navigation} score={score}/>
+            </>
           )}
         </>
       </View>
