@@ -9,7 +9,7 @@ export default function SpotTheStranger({ navigation }) {
   const { level, picArrayState } = navigation.state.params;
   const store = firebase.firestore();
   const [score, setScore] = useState(0);
-  const [lastHighestScore, setLastHighestScore] = useState(0);
+  const [lastHighestScore, setLastHighestScore] = useState(10);
   const userScores = store.collection("userScores");
   const lastHighestScoresRef = store.collection("lastHighestScores");
   const currentUser = firebase.auth().currentUser.uid;
@@ -21,11 +21,8 @@ export default function SpotTheStranger({ navigation }) {
   }, []);
 
   async function getLastHighestScore() {
-    const highestScoreSnapshot = await lastHighestScoresRef.get();
-    const highestScoreArray = highestScoreSnapshot.docs;
-    highestScoreArray.forEach((docSnapshot) => {
-      setLastHighestScore(docSnapshot.data());
-    });
+    const highestScoreSnapshot = await lastHighestScoresRef.doc(currentUser).get();
+    setLastHighestScore(highestScoreSnapshot.data());
   }
 
   const increaseScore = async () => {
@@ -66,11 +63,11 @@ export default function SpotTheStranger({ navigation }) {
   };
 
   const increaseHighestScore = () => {
-    if (level > lastHighestScore.highestScore / 10) {
-      const scoreToUpdate = level * 10 + score;
+    if ((level+1) > lastHighestScore.highestScore / 10) {
+      const scoreToUpdate = level * 10 + score + 1;
       lastHighestScoresRef
         .doc(currentUser)
-        .update({ highestScore: scoreToUpdate });
+        .set({ highestScore: scoreToUpdate, game: "SpotTheStranger", lastUpdate: Date.now(), user: currentUser });
     }
   };
 
@@ -85,6 +82,7 @@ export default function SpotTheStranger({ navigation }) {
           currentPage={currentPage}
           photoToShow={picArrayState[currentPage]}
           score={score}
+          level={level}
         />
       );
     }

@@ -10,28 +10,80 @@ export default function GameIntro({ navigation }) {
   const currentUser = firebase.auth().currentUser.uid;
   const levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const highestScoreRef = store.collection("lastHighestScores");
-  const [highestScore, setHighestScore] = useState(0);
+  const [highestScore, setHighestScore] = useState({ highestScore: 10 });
   const [picArrayState, setPicArrayState] = useState(null);
   const imagesRef = store.collection("rodents");
 
   async function getAllImages() {
     const imagesSnapshot = await imagesRef.get();
     const imagesArray = imagesSnapshot.docs;
-    let animalPics = [];
-    let index10 = 0;
+    processImages(imagesArray);
+  }
+
+  const processImages = (imagesArray) => {
+    const rightAnswerArrayIndex = Math.floor(
+      Math.random() * imagesArray.length
+    );
+    let picsArray = [];
     imagesArray.forEach((docSnapshot, index) => {
-     for (let i = 0; i < docSnapshot.data().photos.length; i++) {
-      animalPics.push({
-        url: docSnapshot.data().photos[i],
-        seen: false,
-        rightAnswer: false,
-      });
-      if (index10 === 10) break
-      index10 = index10 + 1
-     }
-     
+      for (let i = 0; i < docSnapshot.data().photos.length; i++) {
+        if (index === rightAnswerArrayIndex) {
+          picsArray.push({
+            url: docSnapshot.data().photos[i],
+            seen: false,
+            rightAnswer: true,
+          });
+        } else {
+          picsArray.push({
+            url: docSnapshot.data().photos[i],
+            seen: false,
+            rightAnswer: false,
+          });
+        }
+      }
     });
-    setPicArrayState(animalPics);
+
+    // putting truthies in a separate array
+    const truePics = [];
+    for (let i = 0; i < picsArray.length; i++) {
+      if (picsArray[i].rightAnswer === true) truePics.push(picsArray[i]);
+    }
+
+    // filtering big array of truthies and leaving falseys behind
+    const falseArray = picsArray.filter((data) => {
+      if (data.rightAnswer === false) return true;
+      return false;
+    });
+
+    // shuffling big falseys array
+    const shuffledFalseArray = shuffle(falseArray);
+
+    // slicing falseys shuffled array
+    const slicedShuffledFalseArray = shuffledFalseArray.slice(0, 8);
+
+    // getting one from the true pics
+    const oneRandomTruePic = truePics.pop(
+      Math.floor(Math.random() * truePics.length)
+    );
+
+      // mixing 8 falseys and 2 truthies
+    const mixedArray = [...slicedShuffledFalseArray, ...truePics]
+
+      //2nd shuffle: shuffling mixed array
+   const shuffledMixedArray = shuffle(mixedArray)
+
+    // add 
+    shuffledMixedArray.unshift(oneRandomTruePic);
+console.log("shiffled mixed arr, ", shuffledMixedArray)
+    setPicArrayState(shuffledMixedArray);
+  };
+
+  function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
   }
 
   useEffect(() => {
@@ -74,7 +126,10 @@ export default function GameIntro({ navigation }) {
                   i > (highestScore.highestScore - 7) / 10 ? true : false
                 }
                 onPress={() =>
-                  navigation.navigate("SpotTheStranger", { level: data, picArrayState:picArrayState })
+                  navigation.navigate("SpotTheStranger", {
+                    level: data,
+                    picArrayState: picArrayState,
+                  })
                 }
               >
                 <Text
