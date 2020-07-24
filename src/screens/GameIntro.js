@@ -6,16 +6,14 @@ import * as firebase from "firebase";
 import "firebase/firestore";
 
 export default function GameIntro({ navigation }) {
+  const { game } = navigation.state.params;
   const store = firebase.firestore();
   const currentUser = firebase.auth().currentUser.uid;
-  const levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const highestScoreRef = store.collection("lastHighestScores");
-  const [highestScore, setHighestScore] = useState({ highestScore: 10 });
   const [picArrayState, setPicArrayState] = useState(null);
-  const imagesRef = store.collection("rodents");
+  const londonFacesRef = store.collection("london_faces");
 
   async function getAllImages() {
-    const imagesSnapshot = await imagesRef.get();
+    const imagesSnapshot = await londonFacesRef.get();
     const imagesArray = imagesSnapshot.docs;
     processImages(imagesArray);
   }
@@ -26,6 +24,7 @@ export default function GameIntro({ navigation }) {
     );
     let picsArray = [];
     imagesArray.forEach((docSnapshot, index) => {
+      console.log("doc snap", docSnapshot.data())
       for (let i = 0; i < docSnapshot.data().photos.length; i++) {
         if (index === rightAnswerArrayIndex) {
           picsArray.push({
@@ -66,15 +65,14 @@ export default function GameIntro({ navigation }) {
       Math.floor(Math.random() * truePics.length)
     );
 
-      // mixing 8 falseys and 2 truthies
-    const mixedArray = [...slicedShuffledFalseArray, ...truePics]
+    // mixing 8 falseys and 2 truthies
+    const mixedArray = [...slicedShuffledFalseArray, ...truePics];
 
-      //2nd shuffle: shuffling mixed array
-   const shuffledMixedArray = shuffle(mixedArray)
+    //2nd shuffle: shuffling mixed array
+    const shuffledMixedArray = shuffle(mixedArray);
 
-    // add 
+    // add
     shuffledMixedArray.unshift(oneRandomTruePic);
-console.log("shiffled mixed arr, ", shuffledMixedArray)
     setPicArrayState(shuffledMixedArray);
   };
 
@@ -89,62 +87,44 @@ console.log("shiffled mixed arr, ", shuffledMixedArray)
   useEffect(() => {
     getAllImages();
     let mounted = true;
-    getHighestScores().then((result) => {
-      if (mounted) {
-        result.forEach((docSnapshot) => {
-          setHighestScore(docSnapshot.data());
-        });
-      }
-    });
     return () => (mounted = false);
   }, []);
-
-  async function getHighestScores() {
-    const highestScoresSnapshot = await highestScoreRef
-      .where("user", "==", currentUser)
-      .where("game", "==", "SpotTheStranger")
-      .get();
-    return highestScoresSnapshot.docs;
-  }
 
   return (
     <>
       <Back navigation={navigation} where="Home" />
       <Header navigation={navigation} />
       <View style={styles.container}>
-        <Text style={styles.text}>Spot the Stranger</Text>
-        <Text style={styles.text}>
-          In this game, you have to recognize your friends and spot the new
-          faces that come along.
-        </Text>
-        {levels.map((data, i) => {
-          return (
-            <>
-              <TouchableOpacity
-                key={i}
-                disabled={
-                  i > (highestScore.highestScore - 7) / 10 ? true : false
-                }
-                onPress={() =>
-                  navigation.navigate("SpotTheStranger", {
-                    level: data,
-                    picArrayState: picArrayState,
-                  })
-                }
-              >
-                <Text
-                  style={
-                    i > (highestScore.highestScore - 7) / 10
-                      ? styles.disabled
-                      : styles.enabled
-                  }
-                >
-                  Level{data}
-                </Text>
-              </TouchableOpacity>
-            </>
-          );
-        })}
+        {game === "RememberTheFace" && (
+          <>
+            <Text style={styles.text}>Remember The Face</Text>
+            <Text style={styles.text}>
+              In this game, you have to remember a specific person and tap them
+              whenever you see them again.
+            </Text>
+          </>
+        )}
+        {game === "SpotTheImposter" && (
+          <>
+            <Text style={styles.text}>Spot The Impostor</Text>
+            <Text style={styles.text}>
+              We'll show you different pictures of a celebrity and their
+              doppelgangers. Can you spot the doppelgangers?
+            </Text>
+          </>
+        )}
+        <TouchableOpacity onPress={() => navigation.navigate(game)}>
+          <Text
+            style={{
+              backgroundColor: "#1b6ca8",
+              paddingVertical: 10,
+              paddingHorizontal: 18,
+              color: "white",
+            }}
+          >
+            START
+          </Text>
+        </TouchableOpacity>
       </View>
     </>
   );

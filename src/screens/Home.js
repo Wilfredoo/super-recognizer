@@ -24,9 +24,18 @@ export default function Home({ navigation }) {
         <Text style={styles.title}>
         Games
         </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("GameIntro")}>
+      <TouchableOpacity onPress={() => navigation.navigate("GameIntro", {
+        game: "RememberTheFace"
+      })}>
         <Text style={styles.title}>
-        Spot the Stranger
+        Remember The Face
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("GameIntro", {
+        game:"SpotTheImposter"
+      })}>
+        <Text style={styles.title}>
+        Imposter Syndrome
         </Text>
       </TouchableOpacity>
       </KeyboardAvoidingScrollView>
