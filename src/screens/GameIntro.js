@@ -8,23 +8,41 @@ import "firebase/firestore";
 export default function GameIntro({ navigation }) {
   const { game } = navigation.state.params;
   const store = firebase.firestore();
-  const currentUser = firebase.auth().currentUser.uid;
   const [picArrayState, setPicArrayState] = useState(null);
   const londonFacesRef = store.collection("london_faces");
+  const typeArray = ["brunette", "blond", "light-brown"];
+  const genderArray = ["male", "female"];
+  const ageArray = ["young", "middle"];
 
   async function getAllImages() {
-    const imagesSnapshot = await londonFacesRef.get();
-    const imagesArray = imagesSnapshot.docs;
+    const imagesSnapshot = await londonFacesRef
+      .where(
+        "type",
+        "==",
+        typeArray[Math.floor(Math.random() * typeArray.length)]
+      )
+      .where(
+        "gender",
+        "==",
+        genderArray[Math.floor(Math.random() * genderArray.length)]
+      )
+      .where("age", "==", ageArray[Math.floor(Math.random() * ageArray.length)])
+      .get();
+    // bald-white
+    // light-brown
+    // black
+    // white-skin-brown-hair
+
+    const imagesArray = await imagesSnapshot.docs;
     processImages(imagesArray);
   }
 
-  const processImages = (imagesArray) => {
-    const rightAnswerArrayIndex = Math.floor(
+  const processImages = async (imagesArray) => {
+    const rightAnswerArrayIndex = await Math.floor(
       Math.random() * imagesArray.length
     );
     let picsArray = [];
-    imagesArray.forEach((docSnapshot, index) => {
-      console.log("doc snap", docSnapshot.data())
+    await imagesArray.forEach((docSnapshot, index) => {
       for (let i = 0; i < docSnapshot.data().photos.length; i++) {
         if (index === rightAnswerArrayIndex) {
           picsArray.push({
@@ -45,11 +63,14 @@ export default function GameIntro({ navigation }) {
     // putting truthies in a separate array
     const truePics = [];
     for (let i = 0; i < picsArray.length; i++) {
-      if (picsArray[i].rightAnswer === true) truePics.push(picsArray[i]);
+      if (picsArray[i].rightAnswer === true) await truePics.push(picsArray[i]);
     }
 
+    const shuffledTruthies = shuffle(truePics);
+    const slicedShuffledTruthies = shuffledTruthies.slice(0, 4);
+
     // filtering big array of truthies and leaving falseys behind
-    const falseArray = picsArray.filter((data) => {
+    const falseArray = await picsArray.filter((data) => {
       if (data.rightAnswer === false) return true;
       return false;
     });
@@ -58,22 +79,29 @@ export default function GameIntro({ navigation }) {
     const shuffledFalseArray = shuffle(falseArray);
 
     // slicing falseys shuffled array
-    const slicedShuffledFalseArray = shuffledFalseArray.slice(0, 8);
+    const slicedShuffledFalseArray = shuffledFalseArray.slice(0, 10);
 
     // getting one from the true pics
     const oneRandomTruePic = truePics.pop(
       Math.floor(Math.random() * truePics.length)
     );
 
-    // mixing 8 falseys and 2 truthies
-    const mixedArray = [...slicedShuffledFalseArray, ...truePics];
+    // mixing 10 falseys and 5 truthies
+    const mixedArray = [...slicedShuffledFalseArray, ...slicedShuffledTruthies];
 
     //2nd shuffle: shuffling mixed array
     const shuffledMixedArray = shuffle(mixedArray);
 
+      // let cut it again
+    const slicedShuffledMixedArray = shuffledMixedArray.slice(0, 9);
+
+
     // add
-    shuffledMixedArray.unshift(oneRandomTruePic);
-    setPicArrayState(shuffledMixedArray);
+    slicedShuffledMixedArray.unshift(oneRandomTruePic);
+    console.log("suffled final", slicedShuffledMixedArray);
+    console.log("suffled final", slicedShuffledMixedArray.length);
+
+    setPicArrayState(slicedShuffledMixedArray);
   };
 
   function shuffle(a) {
@@ -113,7 +141,11 @@ export default function GameIntro({ navigation }) {
             </Text>
           </>
         )}
-        <TouchableOpacity onPress={() => navigation.navigate(game)}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("RememberTheFace", {
+            picArrayState: picArrayState
+          })}
+        >
           <Text
             style={{
               backgroundColor: "#1b6ca8",

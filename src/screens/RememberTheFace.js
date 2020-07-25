@@ -6,7 +6,8 @@ import * as firebase from "firebase";
 import "firebase/firestore";
 
 export default function RememberTheFace({ navigation }) {
-  const { level, picArrayState } = navigation.state.params;
+  console.log("start remember the face")
+  const { picArrayState } = navigation.state.params;
   const store = firebase.firestore();
   const [score, setScore] = useState(0);
   const [lastHighestScore, setLastHighestScore] = useState(10);
@@ -42,10 +43,6 @@ export default function RememberTheFace({ navigation }) {
     nextPage();
   };
 
-  const finish = () => {
-    saveScore();
-    unlockNextLevel();
-  };
 
   const saveScore = () => {
     return userScores.doc(currentUser).collection("SpotTheStranger").add({
@@ -54,21 +51,6 @@ export default function RememberTheFace({ navigation }) {
       score: score,
       time: Date.now(),
     });
-  };
-
-  const unlockNextLevel = () => {
-    if (score >= 6) {
-      increaseHighestScore();
-    }
-  };
-
-  const increaseHighestScore = () => {
-    if ((level+1) > lastHighestScore.highestScore / 10) {
-      const scoreToUpdate = level * 10 + score + 1;
-      lastHighestScoresRef
-        .doc(currentUser)
-        .set({ highestScore: scoreToUpdate, game: "SpotTheStranger", lastUpdate: Date.now(), user: currentUser });
-    }
   };
 
   const arrayOfPages = pageArray.map((data, i) => {
@@ -82,7 +64,6 @@ export default function RememberTheFace({ navigation }) {
           currentPage={currentPage}
           photoToShow={picArrayState[currentPage]}
           score={score}
-          level={level}
         />
       );
     }
@@ -92,8 +73,7 @@ export default function RememberTheFace({ navigation }) {
       <Header navigation={navigation} />
       <View style={styles.container}>
         <Text style={styles.title}>
-          Remember the face {"\n"}
-          {"\n"}Level {level}
+          Remember the face
         </Text>
         {arrayOfPages[currentPage]}
       </View>
