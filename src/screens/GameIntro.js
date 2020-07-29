@@ -10,9 +10,8 @@ export default function GameIntro({ navigation }) {
   const store = firebase.firestore();
   const [picArrayState, setPicArrayState] = useState(null);
   const londonFacesRef = store.collection("london_faces");
-  const typeArray = ["brunette", "blond", "light-brown"];
+  const typeArray = ["brunette", "blond", "light-brown", "black", "brown"];
   const genderArray = ["male", "female"];
-  const ageArray = ["young", "middle"];
 
   async function getAllImages() {
     const imagesSnapshot = await londonFacesRef
@@ -26,12 +25,7 @@ export default function GameIntro({ navigation }) {
         "==",
         genderArray[Math.floor(Math.random() * genderArray.length)]
       )
-      .where("age", "==", ageArray[Math.floor(Math.random() * ageArray.length)])
       .get();
-    // bald-white
-    // light-brown
-    // black
-    // white-skin-brown-hair
 
     const imagesArray = await imagesSnapshot.docs;
     processImages(imagesArray);
@@ -67,8 +61,8 @@ export default function GameIntro({ navigation }) {
     }
 
     const shuffledTruthies = shuffle(truePics);
-    const slicedShuffledTruthies = shuffledTruthies.slice(0, 4);
-
+    const slicedShuffledTruthies = shuffledTruthies.slice(0, 5);
+    console.log("sclied truthies", slicedShuffledTruthies)
     // filtering big array of truthies and leaving falseys behind
     const falseArray = await picsArray.filter((data) => {
       if (data.rightAnswer === false) return true;
@@ -92,14 +86,11 @@ export default function GameIntro({ navigation }) {
     //2nd shuffle: shuffling mixed array
     const shuffledMixedArray = shuffle(mixedArray);
 
-      // let cut it again
+    // let cut it again
     const slicedShuffledMixedArray = shuffledMixedArray.slice(0, 9);
-
 
     // add
     slicedShuffledMixedArray.unshift(oneRandomTruePic);
-    console.log("suffled final", slicedShuffledMixedArray);
-    console.log("suffled final", slicedShuffledMixedArray.length);
 
     setPicArrayState(slicedShuffledMixedArray);
   };
@@ -142,9 +133,11 @@ export default function GameIntro({ navigation }) {
           </>
         )}
         <TouchableOpacity
-          onPress={() => navigation.navigate("RememberTheFace", {
-            picArrayState: picArrayState
-          })}
+          onPress={() =>
+            navigation.navigate("RememberTheFace", {
+              picArrayState: picArrayState,
+            })
+          }
         >
           <Text
             style={{

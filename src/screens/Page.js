@@ -19,7 +19,7 @@ export default function Page({
           {currentPage === 0 && (
             <>
               <View style={styles.container}>
-                <Text style={styles.text}>This is your friend</Text>
+                <Text style={styles.text}>Remember this face</Text>
                 <Image
                   style={styles.image}
                   source={{
@@ -27,8 +27,7 @@ export default function Page({
                   }}
                 />
                 <Text style={styles.text}>
-                  In the following pictures, you'll have to identify who is NOT
-                  your friend. That is, a stranger.
+                  In the following pictures, you'll have to identify the face you saw.
                 </Text>
                 <TouchableOpacity onPress={() => nextPage()}>
                   <Text
@@ -49,7 +48,7 @@ export default function Page({
           {currentPage >= 1 && currentPage <= 10 && (
             <>
               <View style={styles.container}>
-                <Text style={styles.text}>Is this a stranger?</Text>
+                <Text style={styles.text}>Is this the face you saw?</Text>
                 <Image
                   style={styles.image}
                   source={{

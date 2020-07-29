@@ -6,7 +6,6 @@ import Stats from "./src/screens/Stats";
 import Profile from "./src/screens/Profile";
 import GameIntro from "./src/screens/GameIntro";
 import ScoreResult from "./src/screens/ScoreResult";
-import SpotTheImposter from "./src/screens/SpotTheImposter";
 import RememberTheFace from "./src/screens/RememberTheFace";
 import Home from "./src/screens/Home";
 import firebaseConfigDEV from "./config/FirebaseConfigDEV";
@@ -113,7 +112,6 @@ export default createAppContainer(
       App: DashboardTabNavigator,
       Auth: AuthStack,
       GameIntro: GameIntro,
-      SpotTheImposter: SpotTheImposter,
       RememberTheFace: RememberTheFace,
       ScoreResult: ScoreResult
     },
