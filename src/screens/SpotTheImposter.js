@@ -11,8 +11,7 @@ export default function RememberTheFace({ navigation }) {
   const [currentPage, setCurrentPage] = useState(0);
   const pageArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   const nextPage = () => {
     setCurrentPage((currentPage) => currentPage + 1);
@@ -48,14 +47,13 @@ export default function RememberTheFace({ navigation }) {
     <>
       <Header navigation={navigation} />
       <View style={styles.container}>
-        <Text style={styles.title}>
-          Remember the face
-        </Text>
+        <Text style={styles.title}>Spot the Imposter</Text>
         {arrayOfPages[currentPage]}
       </View>
     </>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -11,7 +11,7 @@ import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scrol
 import * as firebase from "firebase";
 import "firebase/firestore";
 
-export default function Home({ navigation }) {
+export default function AllGames({ navigation }) {
   const store = firebase.firestore();
   const currentUser = firebase.auth().currentUser.uid;
 

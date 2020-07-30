@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import "firebase/firestore";
 import ScoreResult from "./ScoreResult";
 
 export default function Page({
   navigation,
+  game,
   answer,
   nextPage,
   currentPage,
   photoToShow,
   score,
-  level
 }) {
   return (
     <>
@@ -27,7 +27,8 @@ export default function Page({
                   }}
                 />
                 <Text style={styles.text}>
-                  In the following pictures, you'll have to identify the face you saw.
+                  In the following pictures, you'll have to identify the face
+                  you saw.
                 </Text>
                 <TouchableOpacity onPress={() => nextPage()}>
                   <Text
@@ -90,7 +91,11 @@ export default function Page({
           )}
           {currentPage === 11 && (
             <>
-              <ScoreResult navigation={navigation} score={score} level={level} />
+              <ScoreResult
+                navigation={navigation}
+                game={game}
+                score={score}
+              />
               <Text style={styles.quote}>
                 "It's not the size of the dog in the fight, it's the size of the
                 fight in the dog"

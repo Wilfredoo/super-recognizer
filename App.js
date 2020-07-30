@@ -7,7 +7,8 @@ import Profile from "./src/screens/Profile";
 import GameIntro from "./src/screens/GameIntro";
 import ScoreResult from "./src/screens/ScoreResult";
 import RememberTheFace from "./src/screens/RememberTheFace";
-import Home from "./src/screens/Home";
+import SpotTheImposter from "./src/screens/SpotTheImposter";
+import AllGames from "./src/screens/AllGames";
 import firebaseConfigDEV from "./config/FirebaseConfigDEV";
 import firebaseConfigPROD from "./config/FirebaseConfigPROD";
 import * as firebase from "firebase";
@@ -65,10 +66,10 @@ const DashboardTabNavigator = createBottomTabNavigator(
       },
     },
 
-    Home: {
-      screen: Home,
+    AllGames: {
+      screen: AllGames,
       navigationOptions: {
-        tabBarLabel: "Home",
+        tabBarLabel: "Games",
         tabBarIcon: ({ tintColor }) => (
           <MaterialCommunityIcons name="face-recognition" size={24} color={tintColor} />
         ),
@@ -94,7 +95,7 @@ const DashboardTabNavigator = createBottomTabNavigator(
     },
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "AllGames",
     navigationOptions: ({ navigation }) => {
       const { routeName } = navigation.state.routes[navigation.state.index];
       return {
@@ -113,6 +114,7 @@ export default createAppContainer(
       Auth: AuthStack,
       GameIntro: GameIntro,
       RememberTheFace: RememberTheFace,
+      SpotTheImposter: SpotTheImposter,
       ScoreResult: ScoreResult
     },
     {
