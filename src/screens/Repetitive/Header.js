@@ -8,7 +8,7 @@ export default function Header({ navigation }) {
           <Text style={{marginBottom: 7}}>Super Recognizer</Text>
           <Image
             style={{ width: 40, height: 40 }}
-            source={require("../../assets/face.jpg")}
+            source={require("../../../assets/face.jpg")}
           />
         </View>
       </TouchableOpacity>

@@ -6,8 +6,8 @@ import * as firebase from "firebase";
 import 'firebase/firestore';
 import { Formik } from "formik";
 import * as Yup from "yup";
-import firebaseConfigDEV from "../../config/FirebaseConfigDEV";
-import firebaseConfigPROD from "../../config/FirebaseConfigPROD";
+import firebaseConfigDEV from "../../../config/FirebaseConfigDEV";
+import firebaseConfigPROD from "../../../config/FirebaseConfigPROD";
 
 
 if (!firebase.apps.length) {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import * as firebase from "firebase";
-import Header from "./Header";
+import Header from "./Repetitive/Header";
 
 export default class Profile extends Component {
   state = {

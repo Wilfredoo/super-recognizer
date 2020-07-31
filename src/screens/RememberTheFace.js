@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet } from "react-native";
-import Header from "./Header";
+import Header from "./Repetitive/Header";
 import Page from "./Page";
 import * as firebase from "firebase";
 import "firebase/firestore";

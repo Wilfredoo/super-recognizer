@@ -4,7 +4,7 @@ import {
   View,
   StyleSheet,
 } from "react-native";
-import Header from "./Header";
+import Header from "./Repetitive/Header";
 import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scroll-view";
 
 export default function Stats({ navigation }) {

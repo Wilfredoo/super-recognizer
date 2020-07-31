@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import Header from "./Header";
-import Back from "./Back";
+import Header from "./Repetitive/Header";
+import Back from "./Repetitive/Back";
 import * as firebase from "firebase";
 import "firebase/firestore";
-import processImages from "../helpers/processImages.js";
+import processImages from "../Helpers/processImages.js";
 
 
 export default function GameIntro({ navigation }) {

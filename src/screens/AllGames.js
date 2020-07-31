@@ -5,8 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import Header from "./Header";
-import registerToken from "../helpers/registerNotification.js";
+import Header from "./Repetitive/Header";
+import registerToken from "../Helpers/registerNotification.js";
 import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scroll-view";
 import * as firebase from "firebase";
 import "firebase/firestore";
@@ -36,6 +36,13 @@ export default function AllGames({ navigation }) {
       })}>
         <Text style={styles.title}>
         Imposter Syndrome
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("GameIntro", {
+        game:"SpotTheImposter"
+      })}>
+        <Text style={styles.title}>
+        World of Averages
         </Text>
       </TouchableOpacity>
       </KeyboardAvoidingScrollView>

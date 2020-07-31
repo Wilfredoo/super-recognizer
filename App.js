@@ -1,24 +1,19 @@
-import React from "react";
-import Loading from "./src/screens/Loading";
-import Login from "./src/screens/Login";
-import Register from "./src/screens/Register";
-import Stats from "./src/screens/Stats";
-import Profile from "./src/screens/Profile";
+import Loading from "./src/screens/Auth/Loading";
+import Login from "./src/screens/Auth/Login";
+import Register from "./src/screens/Auth/Register";
 import GameIntro from "./src/screens/GameIntro";
 import ScoreResult from "./src/screens/ScoreResult";
 import RememberTheFace from "./src/screens/RememberTheFace";
 import SpotTheImposter from "./src/screens/SpotTheImposter";
-import AllGames from "./src/screens/AllGames";
 import firebaseConfigDEV from "./config/FirebaseConfigDEV";
 import firebaseConfigPROD from "./config/FirebaseConfigPROD";
 import * as firebase from "firebase";
-import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { decode, encode } from "base-64";
 import { YellowBox } from "react-native";
 import _ from "lodash";
-import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
+import DashboardTabNavigator from './src/Navigation/Navigation.js'
 
 if (!firebase.apps.length) {
   if (__DEV__) {
@@ -48,63 +43,6 @@ const AuthStack = createStackNavigator({
   Login: Login,
   Register: Register,
 });
-
-const DashboardTabNavigator = createBottomTabNavigator(
-  {
-    Profile: {
-      screen: Profile,
-      navigationOptions: {
-        title: "Profile",
-        tabBarLabel: "Profile",
-        tabBarIcon: ({ tintColor }) => (
-          <MaterialCommunityIcons name="face-profile" size={24} color={tintColor} />
-        ),
-        tabBarOptions: {
-          activeTintColor: "#1b6ca8",
-          inactiveTintColor: "black",
-        },
-      },
-    },
-
-    AllGames: {
-      screen: AllGames,
-      navigationOptions: {
-        tabBarLabel: "Games",
-        tabBarIcon: ({ tintColor }) => (
-          <MaterialCommunityIcons name="face-recognition" size={24} color={tintColor} />
-        ),
-        tabBarOptions: {
-          activeTintColor: "#1b6ca8",
-          inactiveTintColor: "black",
-        },
-      },
-    },
-    Stats: {
-      screen: Stats,
-      headerTitle: "Stats",
-      navigationOptions: {
-        tabBarLabel: "Stats",
-        tabBarIcon: ({ tintColor }) => (
-          <Ionicons name="ios-stats" size={24} color={tintColor} />
-        ),
-        tabBarOptions: {
-          activeTintColor: "#1b6ca8",
-          inactiveTintColor: "black",
-        },
-      },
-    },
-  },
-  {
-    initialRouteName: "AllGames",
-    navigationOptions: ({ navigation }) => {
-      const { routeName } = navigation.state.routes[navigation.state.index];
-      return {
-        headerTitle: routeName,
-      };
-    },
-  },
-  {}
-);
 
 export default createAppContainer(
   createSwitchNavigator(
