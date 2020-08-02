@@ -1,10 +1,10 @@
 import Loading from "./src/screens/Auth/Loading";
 import Login from "./src/screens/Auth/Login";
 import Register from "./src/screens/Auth/Register";
-import GameIntro from "./src/screens/GameIntro";
-import ScoreResult from "./src/screens/ScoreResult";
-import RememberTheFace from "./src/screens/RememberTheFace";
-import SpotTheImposter from "./src/screens/SpotTheImposter";
+import GameIntro from "./src/screens/Games/GameIntro";
+import ScoreResult from "./src/screens/Games/ScoreResult";
+import RememberTheFace from "./src/screens/Games/RememberTheFace/RememberTheFace";
+import SpotTheImposter from "./src/screens/Games/SpotTheImposter/SpotTheImposter";
 import firebaseConfigDEV from "./config/FirebaseConfigDEV";
 import firebaseConfigPROD from "./config/FirebaseConfigPROD";
 import * as firebase from "firebase";

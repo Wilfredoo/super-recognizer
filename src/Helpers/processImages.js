@@ -1,5 +1,5 @@
  const processImages = async (imagesArray) => {
-     console.log("yey!", imagesArray    )
+   console.log("images array", imagesArray)
     const rightAnswerArrayIndex = await Math.floor(
       Math.random() * imagesArray.length
     );
@@ -9,13 +9,11 @@
         if (index === rightAnswerArrayIndex) {
           picsArray.push({
             url: docSnapshot.data().photos[i],
-            seen: false,
             rightAnswer: true,
           });
         } else {
           picsArray.push({
             url: docSnapshot.data().photos[i],
-            seen: false,
             rightAnswer: false,
           });
         }

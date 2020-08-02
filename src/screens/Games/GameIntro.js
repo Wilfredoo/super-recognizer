@@ -1,48 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import Header from "./Repetitive/Header";
-import Back from "./Repetitive/Back";
-import * as firebase from "firebase";
-import "firebase/firestore";
-import processImages from "../Helpers/processImages.js";
-
+import Header from "../Repetitive/Header";
+import Back from "../Repetitive/Back";
 
 export default function GameIntro({ navigation }) {
-  console.log("navigation", navigation.state.params)
   const { game } = navigation.state.params;
-  const store = firebase.firestore();
-  const [picArrayState, setPicArrayState] = useState(null);
-  const londonFacesRef = store.collection("london_faces");
-  const celebritiesRef = store.collection("celebrities");
-
-  const typeArray = [
-    "brunette_shorthair",
-    "brunette_longhair",
-    "blond",
-    "light_brown",
-    "black",
-    "asian",
-  ];
-  const genderArray = ["male", "female"];
-  const randomTypeIndex = Math.floor(Math.random() * typeArray.length);
-  const randomGenderIndex = Math.floor(Math.random() * genderArray.length);
-
-  async function getAllImages() {
-    console.log("type is gonna be: ", typeArray[randomTypeIndex]);
-    console.log("gender is gonna be: ", genderArray[randomGenderIndex]);
-    const imagesSnapshot = await londonFacesRef
-      .where("type", "==", typeArray[randomTypeIndex])
-      .where("gender", "==", genderArray[randomGenderIndex])
-      .get();
-
-    const imagesArray = await imagesSnapshot.docs;
-    const  slicedShuffledMixedArray=await processImages(imagesArray);
-    setPicArrayState(slicedShuffledMixedArray)
-  }
-
-  useEffect(() => {
-    getAllImages();
-  }, []);
 
   return (
     <>
@@ -69,9 +31,8 @@ export default function GameIntro({ navigation }) {
         )}
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("RememberTheFace", {
+            navigation.navigate(game, {
               game: game,
-              picArrayState: picArrayState,
             })
           }
         >

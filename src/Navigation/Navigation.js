@@ -1,8 +1,8 @@
 
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import Stats from "../screens/Stats";
-import Profile from "../screens/Profile";
-import AllGames from "../screens/AllGames";
+import Stats from "../screens/Stats/Stats";
+import Profile from "../screens/Profile/Profile";
+import AllGames from "../screens/Games/AllGames";
 import React from "react";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 

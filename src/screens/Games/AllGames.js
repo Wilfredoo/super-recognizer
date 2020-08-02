@@ -5,8 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import Header from "./Repetitive/Header";
-import registerToken from "../Helpers/registerNotification.js";
+import Header from "../Repetitive/Header";
 import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scroll-view";
 import * as firebase from "firebase";
 import "firebase/firestore";
@@ -39,7 +38,7 @@ export default function AllGames({ navigation }) {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("GameIntro", {
-        game:"SpotTheImposter"
+        game:"WorldOfAverages"
       })}>
         <Text style={styles.title}>
         World of Averages

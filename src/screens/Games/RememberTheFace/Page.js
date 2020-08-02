@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import "firebase/firestore";
-import ScoreResult from "./ScoreResult";
+import ScoreResult from "../ScoreResult";
 
 export default function Page({
   navigation,
@@ -26,10 +26,6 @@ export default function Page({
                     uri: photoToShow.url,
                   }}
                 />
-                <Text style={styles.text}>
-                  In the following pictures, you'll have to identify the face
-                  you saw.
-                </Text>
                 <TouchableOpacity onPress={() => nextPage()}>
                   <Text
                     style={{
@@ -56,6 +52,7 @@ export default function Page({
                     uri: photoToShow.url,
                   }}
                 />
+                <View style={{flexDirection: "row"}}>
                 <TouchableOpacity
                   onPress={() => answer("YES", photoToShow.rightAnswer)}
                 >
@@ -65,7 +62,7 @@ export default function Page({
                       margin: 20,
                       padding: 10,
                       backgroundColor: "gray",
-                      width: 200,
+                      width: 120,
                     }}
                   >
                     Yes
@@ -80,13 +77,15 @@ export default function Page({
                       margin: 20,
                       padding: 10,
                       backgroundColor: "gray",
-                      width: 200,
+                      width: 120,
                     }}
                   >
                     No
                   </Text>
                 </TouchableOpacity>
               </View>
+              </View>
+
             </>
           )}
           {currentPage === 11 && (
@@ -109,7 +108,7 @@ export default function Page({
 }
 const styles = StyleSheet.create({
   text: { marginBottom: 20, textAlign: "center", maxWidth: "90%" },
-  image: { width: 200, height: 200, marginBottom: 20, alignItems: "center" },
+  image: { width: 300, height: 300, marginBottom: 20, alignItems: "center" },
   container: { alignItems: "center" },
   quote: {
     textAlign: "center",
