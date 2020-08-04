@@ -6,7 +6,6 @@ import ScoreResult from "./src/screens/Games/ScoreResult";
 import RememberTheFace from "./src/screens/Games/RememberTheFace/RememberTheFace";
 import SpotTheImposter from "./src/screens/Games/SpotTheImposter/SpotTheImposter";
 import firebaseConfigDEV from "./config/FirebaseConfigDEV";
-import firebaseConfigPROD from "./config/FirebaseConfigPROD";
 import * as firebase from "firebase";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
@@ -16,11 +15,7 @@ import _ from "lodash";
 import DashboardTabNavigator from './src/Navigation/Navigation.js'
 
 if (!firebase.apps.length) {
-  if (__DEV__) {
     firebase.initializeApp(firebaseConfigDEV);
-  } else {
-    firebase.initializeApp(firebaseConfigPROD);
-  }
 }
 
 YellowBox.ignoreWarnings(["Setting a timer"]);

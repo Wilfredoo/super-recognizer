@@ -16,7 +16,7 @@ export default function Stats({ navigation }) {
         contentContainerStyle={styles.contentContainer}
       >
         <Text style={styles.title}>
-        Here is the stats
+        Coming Soon
         </Text>
       
       </KeyboardAvoidingScrollView>

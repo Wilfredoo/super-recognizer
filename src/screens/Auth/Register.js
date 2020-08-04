@@ -7,15 +7,10 @@ import 'firebase/firestore';
 import { Formik } from "formik";
 import * as Yup from "yup";
 import firebaseConfigDEV from "../../../config/FirebaseConfigDEV";
-import firebaseConfigPROD from "../../../config/FirebaseConfigPROD";
 
 
 if (!firebase.apps.length) {
-  if (__DEV__) {
     firebase.initializeApp(firebaseConfigDEV);
-  } else {
-    firebase.initializeApp(firebaseConfigPROD);
-  }
 }
 
 const validationSchema = Yup.object({

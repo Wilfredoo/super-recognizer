@@ -37,11 +37,11 @@ export default function AllGames({ navigation }) {
         Imposter Syndrome
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("GameIntro", {
+      <TouchableOpacity disabled={true} onPress={() => navigation.navigate("GameIntro", {
         game:"WorldOfAverages"
       })}>
-        <Text style={styles.title}>
-        World of Averages
+        <Text style={styles.disabled}>
+        World of Averages (coming soon)
         </Text>
       </TouchableOpacity>
       </KeyboardAvoidingScrollView>
@@ -65,5 +65,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
   },
+  disabled: {
+    marginBottom: 50,
+    width: 300,
+    textAlign: "center",
+    fontSize: 20,
+    color: "gray"
+  }
  
 });

@@ -16,7 +16,7 @@ export default function SpotTheImposter({ navigation }) {
   const celebritiesRef = store.collection("celebrities");
   const pageArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
-  const typeArray = ["Trump", "Shakira"];
+  const typeArray = ["Trump", "Shakira", "Bruno Mars", "Ed Sheeran", "Taylor Swift", "Tom Cruise"];
 
   const randomTypeIndex = Math.floor(Math.random() * typeArray.length);
 
