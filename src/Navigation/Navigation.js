@@ -4,6 +4,8 @@ import Stats from "../screens/Stats/Stats";
 import Profile from "../screens/Profile/Profile";
 import AllGames from "../screens/Games/AllGames";
 import React from "react";
+import { AntDesign } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons'; 
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 
   const DashboardTabNavigator = createBottomTabNavigator(
@@ -12,9 +14,10 @@ import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
         screen: Profile,
         navigationOptions: {
           title: "Profile",
-          tabBarLabel: "Profile",
+          tabBarLabel: "About",
           tabBarIcon: ({ tintColor }) => (
-            <MaterialCommunityIcons name="face-profile" size={24} color={tintColor} />
+            // <MaterialCommunityIcons name="face-profile" size={24} color={tintColor} />
+            <AntDesign name="questioncircle" size={24} color={tintColor} />
           ),
           tabBarOptions: {
             activeTintColor: "#1b6ca8",
@@ -40,9 +43,10 @@ import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
         screen: Stats,
         headerTitle: "Stats",
         navigationOptions: {
-          tabBarLabel: "Stats",
+          tabBarLabel: "Feedback",
           tabBarIcon: ({ tintColor }) => (
-            <Ionicons name="ios-stats" size={24} color={tintColor} />
+            // <Ionicons name="ios-stats" size={24} color={tintColor} />
+            <MaterialIcons name="feedback" size={24} color={tintColor} />
           ),
           tabBarOptions: {
             activeTintColor: "#1b6ca8",

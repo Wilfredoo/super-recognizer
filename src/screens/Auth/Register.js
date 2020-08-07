@@ -14,7 +14,7 @@ if (!firebase.apps.length) {
 }
 
 const validationSchema = Yup.object({
-  name: Yup.string().required("Your username is require"),
+  name: Yup.string().required("Your username is required"),
 
   email: Yup.string()
     .required("Email is required")
@@ -85,10 +85,7 @@ export default class Register extends Component {
             errors,
             touched,
             handleChange,
-            handleBlur,
             handleSubmit,
-            isSubmitting,
-            setFieldValue,
           }) => {
             return (
               <View style={styles.form}>

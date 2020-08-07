@@ -32,7 +32,8 @@ export default function Page({
                       textAlign: "center",
                       margin: 20,
                       padding: 10,
-                      backgroundColor: "gray",
+                      backgroundColor: "#1b6ca8",
+                      color: "#fff",
                       width: 200,
                     }}
                   >
@@ -61,7 +62,8 @@ export default function Page({
                       textAlign: "center",
                       margin: 20,
                       padding: 10,
-                      backgroundColor: "gray",
+                      backgroundColor: "#1b6ca8",
+                      color: "#fff",
                       width: 120,
                     }}
                   >
@@ -76,7 +78,8 @@ export default function Page({
                       textAlign: "center",
                       margin: 20,
                       padding: 10,
-                      backgroundColor: "gray",
+                      backgroundColor: "#1b6ca8",
+                      color: "#fff",
                       width: 120,
                     }}
                   >

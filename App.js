@@ -3,6 +3,7 @@ import Login from "./src/screens/Auth/Login";
 import Register from "./src/screens/Auth/Register";
 import GameIntro from "./src/screens/Games/GameIntro";
 import ScoreResult from "./src/screens/Games/ScoreResult";
+import Feedback from "./src/screens/Games/Feedback";
 import RememberTheFace from "./src/screens/Games/RememberTheFace/RememberTheFace";
 import SpotTheImposter from "./src/screens/Games/SpotTheImposter/SpotTheImposter";
 import firebaseConfigDEV from "./config/FirebaseConfigDEV";
@@ -48,10 +49,12 @@ export default createAppContainer(
       GameIntro: GameIntro,
       RememberTheFace: RememberTheFace,
       SpotTheImposter: SpotTheImposter,
-      ScoreResult: ScoreResult
+      ScoreResult: ScoreResult,
+      Feedback: Feedback,
+
     },
     {
-      initialRouteName: "Loading",
+      initialRouteName: "App",
     }
   )
 );

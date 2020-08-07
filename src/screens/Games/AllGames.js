@@ -12,7 +12,7 @@ import "firebase/firestore";
 
 export default function AllGames({ navigation }) {
   const store = firebase.firestore();
-  const currentUser = firebase.auth().currentUser.uid;
+  // const currentUser = firebase.auth().currentUser.uid;
 
   return (
     <View style={styles.container}>

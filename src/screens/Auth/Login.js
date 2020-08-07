@@ -38,7 +38,6 @@ export default class Login extends Component {
   render() {
     return (
       <KeyboardAvoidingScrollView contentContainerStyle={styles.container}>
-        {/* <Text style={styles.greeting}>{`Sign in here`}</Text> */}
         <View style={styles.errorMessage}>
           {this.state.errorMessage && (
             <Text style={styles.error}>{this.state.errorMessage}</Text>
@@ -60,10 +59,7 @@ export default class Login extends Component {
             errors,
             touched,
             handleChange,
-            handleBlur,
             handleSubmit,
-            isSubmitting,
-            setFieldValue,
           }) => {
             return (
               <View style={styles.form}>
