@@ -7,7 +7,6 @@ import {
 } from "react-native";
 import React from "react";
 import "firebase/firestore";
-import Feedback from "./Feedback"
 
 export default function ScoreResult({ navigation, game, score }) {
   return (
@@ -52,7 +51,6 @@ export default function ScoreResult({ navigation, game, score }) {
             Try another game
           </Text>
         </TouchableOpacity>
-      <Feedback />
       </View>
     </>
   );

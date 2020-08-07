@@ -1,6 +1,6 @@
 
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import Stats from "../screens/Stats/Stats";
+import Feedback from "../screens/Stats/Feedback";
 import Profile from "../screens/Profile/Profile";
 import AllGames from "../screens/Games/AllGames";
 import React from "react";
@@ -40,8 +40,8 @@ import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
         },
       },
       Stats: {
-        screen: Stats,
-        headerTitle: "Stats",
+        screen: Feedback,
+        headerTitle: "Feedback",
         navigationOptions: {
           tabBarLabel: "Feedback",
           tabBarIcon: ({ tintColor }) => (

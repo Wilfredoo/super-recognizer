@@ -65,7 +65,6 @@ export default class Profile extends Component {
                 Farach (mom){"\n"}- (you?)
               </Text>
             </View>
-           
           </View>
           <TouchableOpacity
             style={{ marginTop: 32 }}

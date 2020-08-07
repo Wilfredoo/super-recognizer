@@ -1,15 +1,14 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import Header from "../Repetitive/Header";
-// import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scroll-view";
 import Feedback from "../Games/Feedback";
 
 export default function Stats({ navigation }) {
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
-      
-        <Feedback />
+
+      <Feedback />
     </View>
   );
 }

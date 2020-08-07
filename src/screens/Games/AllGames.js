@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import Header from "../Repetitive/Header";
 import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scroll-view";
 import * as firebase from "firebase";
@@ -20,30 +15,35 @@ export default function AllGames({ navigation }) {
       <KeyboardAvoidingScrollView
         contentContainerStyle={styles.contentContainer}
       >
-        <Text style={styles.title}>
-        Games
-        </Text>
-      <TouchableOpacity onPress={() => navigation.navigate("GameIntro", {
-        game: "RememberTheFace"
-      })}>
-        <Text style={styles.title}>
-        Remember The Face
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("GameIntro", {
-        game:"SpotTheImposter"
-      })}>
-        <Text style={styles.title}>
-        Imposter Syndrome
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity disabled={true} onPress={() => navigation.navigate("GameIntro", {
-        game:"WorldOfAverages"
-      })}>
-        <Text style={styles.disabled}>
-        World of Averages (coming soon)
-        </Text>
-      </TouchableOpacity>
+        <Text style={styles.title}>Games</Text>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("GameIntro", {
+              game: "RememberTheFace",
+            })
+          }
+        >
+          <Text style={styles.text}>Remember The Face</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("GameIntro", {
+              game: "SpotTheImposter",
+            })
+          }
+        >
+          <Text style={styles.text}>Imposter Syndrome</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          disabled={true}
+          onPress={() =>
+            navigation.navigate("GameIntro", {
+              game: "WorldOfAverages",
+            })
+          }
+        >
+          <Text style={styles.disabled}>World of Averages (coming soon)</Text>
+        </TouchableOpacity>
       </KeyboardAvoidingScrollView>
     </View>
   );
@@ -61,7 +61,12 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 50,
-    width: 300,
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "bold"
+  },
+  text: {
+    marginBottom: 50,
     textAlign: "center",
     fontSize: 20,
   },
@@ -70,7 +75,6 @@ const styles = StyleSheet.create({
     width: 300,
     textAlign: "center",
     fontSize: 20,
-    color: "gray"
-  }
- 
+    color: "gray",
+  },
 });
