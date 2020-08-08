@@ -95,7 +95,9 @@ const styles = StyleSheet.create({
   textContainer: {
     maxWidth: "80%",
   },
-  link: { textAlign: "center", fontSize: 18 },
+  link: { textAlign: "center", fontSize: 18, color: "#005086", 
+  textDecorationLine: 'underline',
+},
   sponsorContainer1: {
     backgroundColor: "#f1c5c5",
     borderWidth: 5,

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import {KeyboardAvoidingScrollView} from 'react-native-keyboard-avoiding-scroll-view';
 
 import {
   Text,
@@ -38,6 +39,11 @@ export default function Feedback() {
 
   return (
     <View style={styles.container}>
+    <KeyboardAvoidingScrollView
+    contentContainerStyle={styles.contentContainer}
+
+    >
+
       <Text style={styles.text}>
         Ideas for a new game? Something you didn't like? Found an error? {"\n"}
         {"\n"}Here is the place to say it
@@ -62,7 +68,7 @@ export default function Feedback() {
         onChangeText={(feedback) => setFeedback(feedback)}
         defaultValue={feedback}
         style={styles.feedbackInput}
-        placeholder="Go as lengthy as you'd like"
+        placeholder="You can be concise or go as lengthy as you'd like"
       />
       {error === "empty" && (
         <Text>Don't leave it empty. Tell us what we can improve.</Text>
@@ -82,16 +88,21 @@ export default function Feedback() {
           Send
         </Text>
       </TouchableOpacity>
+    </KeyboardAvoidingScrollView>
     </View>
+
   );
 }
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 50,
+    padding: 25
   },
   text: {
     textAlign: "center",
