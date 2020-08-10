@@ -29,6 +29,14 @@ export default function GameIntro({ navigation }) {
             </Text>
           </>
         )}
+        {game === "WorldOfAverages" && (
+          <>
+            <Text style={styles.text}>World Of Averages</Text>
+            <Text style={styles.text}>
+              There is an average face per country. Your task is to identify the correct one.
+            </Text>
+          </>
+        )}
         <TouchableOpacity
           onPress={() =>
             navigation.navigate(game, {

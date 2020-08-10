@@ -19,13 +19,13 @@ export default function Page({
           {currentPage === 0 && (
             <>
               <View style={styles.container}>
-                <Text style={styles.text}>Remember this face</Text>
                 <Image
                   style={styles.image}
                   source={{
                     uri: photoToShow.url,
                   }}
                 />
+                <Text style={styles.text}>Remember this face</Text>
                 <TouchableOpacity onPress={() => nextPage()}>
                   <Text
                     style={{
@@ -46,13 +46,14 @@ export default function Page({
           {currentPage >= 1 && currentPage <= 10 && (
             <>
               <View style={styles.container}>
-                <Text style={styles.text}>Is this the face you saw?</Text>
                 <Image
                   style={styles.image}
                   source={{
                     uri: photoToShow.url,
                   }}
                 />
+                <Text style={styles.text}>Is this the face you saw?</Text>
+
                 <View style={{flexDirection: "row"}}>
                 <TouchableOpacity
                   onPress={() => answer("YES", photoToShow.rightAnswer)}
@@ -98,10 +99,7 @@ export default function Page({
                 game={game}
                 score={score}
               />
-              <Text style={styles.quote}>
-                "It's not the size of the dog in the fight, it's the size of the
-                fight in the dog"
-              </Text>
+            
             </>
           )}
         </>

@@ -7,57 +7,29 @@ export default function Page({
   navigation,
   game,
   answer,
-  nextPage,
   currentPage,
-  celebrity,
-  photoToShow,
+  personToShow,
   score,
 }) {
   return (
     <>
       <View>
         <>
-          {currentPage === 0 && (
+          {currentPage < 10 && (
             <>
               <View style={styles.container}>
                 <Image
                   style={styles.image}
                   source={{
-                    uri: photoToShow.url,
+                    uri: personToShow.photo,
                   }}
                 />
-                <Text style={styles.text}>This is the real {celebrity}</Text>
-
-                <TouchableOpacity onPress={() => nextPage()}>
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      margin: 20,
-                      padding: 10,
-                      backgroundColor: "gray",
-                      width: 200,
-                    }}
-                  >
-                    Start
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </>
-          )}
-          {currentPage >= 1 && currentPage <= 10 && (
-            <>
-              <View style={styles.container}>
-                <Image
-                  style={styles.image}
-                  source={{
-                    uri: photoToShow.url,
-                  }}
-                />
-                <Text style={styles.text}>Is this an imposter?</Text>
-
+                <Text style={styles.text}>
+                  What's the ethnicity of this person?
+                </Text>
                 <View style={{ flexDirection: "row" }}>
                   <TouchableOpacity
-                    onPress={() => answer("YES", photoToShow.rightAnswer)}
+                    onPress={() => answer(true)}
                   >
                     <Text
                       style={{
@@ -68,11 +40,11 @@ export default function Page({
                         width: 120,
                       }}
                     >
-                      Yes
+                      {personToShow.rightAnswer}
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() => answer("NO", photoToShow.rightAnswer)}
+                    onPress={() => answer(false)}
                   >
                     <Text
                       style={{
@@ -83,14 +55,29 @@ export default function Page({
                         width: 120,
                       }}
                     >
-                      No
+                      {personToShow.wrongAnswer1}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => answer(false)}
+                  >
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        margin: 20,
+                        padding: 10,
+                        backgroundColor: "gray",
+                        width: 120,
+                      }}
+                    >
+                      {personToShow.wrongAnswer2}
                     </Text>
                   </TouchableOpacity>
                 </View>
               </View>
             </>
           )}
-          {currentPage === 11 && (
+          {currentPage === 10 && (
             <>
               <ScoreResult navigation={navigation} game={game} score={score} />
             </>
@@ -100,6 +87,7 @@ export default function Page({
     </>
   );
 }
+
 const styles = StyleSheet.create({
   text: { marginBottom: 20, textAlign: "center", maxWidth: "90%" },
   image: { width: 300, height: 300, marginBottom: 20, alignItems: "center" },

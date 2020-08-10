@@ -1,47 +1,52 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
 import Header from "../../Repetitive/Header";
-import Page from "../SpotTheImposter/Page";
+import Page from "./Page";
 import * as firebase from "firebase";
 import "firebase/firestore";
-import processImages2 from "../../../Helpers/processImages2.js";
+import processImages3 from "../../../Helpers/processImages3.js";
 
-export default function SpotTheImposter({ navigation }) {
+export default function WorldOfAverages({ navigation }) {
   const { game } = navigation.state.params;
   const [score, setScore] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-  const [celebrityName, setCelebrityName] = useState(null);
   const store = firebase.firestore();
   const [picArrayState, setPicArrayState] = useState(null);
-  const celebritiesRef = store.collection("celebrities");
+  const worldOfAveragesRef = store.collection("world_of_averages");
   const pageArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
-  const typeArray = ["Trump", "Shakira", "Bruno Mars", "Ed Sheeran", "Taylor Swift", "Tom Cruise", "Keanu Reeves"];
+  const typeArray = [
+    "afghan",
+    "african_american",
+    "argentinian",
+    "austrian",
+    "dutch",
+    "belgian",
+    "brazilian",
+    "burmese",
+    "cambodian",
+    "english",
+    "ethiopian",
+    "filipino",
+    "finish",
+    "german",
+    "french",
+    "hungarian",
+    "indian",
+    "iranian",
+    "irish",
+    "israeli",
+    "italian",
+    "japanese",
+    "korean",
+    "lebanese",
+  ];
 
-  const randomTypeIndex = Math.floor(Math.random() * typeArray.length);
+  // alones - egyptian, chad camerun, iraqi
 
   async function getAllImages() {
-    const realImagesSnapshot = await celebritiesRef
-      .where("name", "==", typeArray[randomTypeIndex])
-      .where("real", "==", true)
-      .get();
-
-    const fakeImagesSnapshot = await celebritiesRef
-      .where("name", "==", typeArray[randomTypeIndex])
-      .where("real", "==", false)
-      .get();
-
-    const realImagesDocs = await realImagesSnapshot.docs;
-    const fakeImagesDocs = await fakeImagesSnapshot.docs;
-    await realImagesDocs.forEach((docSnapshot) => {
-      setCelebrityName(docSnapshot.data().name)
-      
-    });
-
-    const slicedShuffledMixedArray = await processImages2(
-      realImagesDocs,
-      fakeImagesDocs
-    );
+    const imagesSnapshot = await worldOfAveragesRef.get();
+    const slicedShuffledMixedArray = await processImages3(imagesSnapshot, typeArray);
     setPicArrayState(slicedShuffledMixedArray);
   }
 
@@ -58,8 +63,7 @@ export default function SpotTheImposter({ navigation }) {
   };
 
   const answer = async (answer, correctPicture) => {
-    if (answer === "YES" && correctPicture) await increaseScore();
-    if (answer === "NO" && !correctPicture) await increaseScore();
+    if (answer) await increaseScore();
     nextPage();
   };
 
@@ -73,9 +77,8 @@ export default function SpotTheImposter({ navigation }) {
           answer={answer}
           nextPage={nextPage}
           currentPage={currentPage}
-          photoToShow={picArrayState[currentPage]}
+          personToShow={picArrayState[currentPage]}
           score={score}
-          celebrity={celebrityName}
         />
       );
     }
@@ -84,7 +87,7 @@ export default function SpotTheImposter({ navigation }) {
     <>
       <Header navigation={navigation} />
       <View style={styles.container}>
-        <Text style={styles.title}>Spot The Imposter</Text>
+        <Text style={styles.title}>World of Averages</Text>
         {picArrayState ? (
           arrayOfPages[currentPage]
         ) : (

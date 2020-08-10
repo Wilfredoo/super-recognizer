@@ -3,9 +3,10 @@ import Login from "./src/screens/Auth/Login";
 import Register from "./src/screens/Auth/Register";
 import GameIntro from "./src/screens/Games/GameIntro";
 import ScoreResult from "./src/screens/Games/ScoreResult";
-import Feedback from "./src/screens/Stats/Feedback";
+import Feedback from "./src/screens/Feedback/Feedback";
 import RememberTheFace from "./src/screens/Games/RememberTheFace/RememberTheFace";
 import SpotTheImposter from "./src/screens/Games/SpotTheImposter/SpotTheImposter";
+import WorldOfAverages from "./src/screens/Games/WorldOfAverages/WorldOfAverages";
 import firebaseConfigDEV from "./config/FirebaseConfigDEV";
 import * as firebase from "firebase";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
@@ -13,10 +14,10 @@ import { createStackNavigator } from "react-navigation-stack";
 import { decode, encode } from "base-64";
 import { YellowBox } from "react-native";
 import _ from "lodash";
-import DashboardTabNavigator from './src/Navigation/Navigation.js'
+import DashboardTabNavigator from "./src/Navigation/Navigation.js";
 
 if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfigDEV);
+  firebase.initializeApp(firebaseConfigDEV);
 }
 
 YellowBox.ignoreWarnings(["Setting a timer"]);
@@ -49,9 +50,9 @@ export default createAppContainer(
       GameIntro: GameIntro,
       RememberTheFace: RememberTheFace,
       SpotTheImposter: SpotTheImposter,
+      WorldOfAverages: WorldOfAverages,
       ScoreResult: ScoreResult,
       Feedback: Feedback,
-
     },
     {
       initialRouteName: "App",

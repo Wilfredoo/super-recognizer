@@ -1,7 +1,7 @@
 
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import Feedback from "../screens/Stats/Feedback";
-import Profile from "../screens/Profile/Profile";
+import Feedback from "../screens/Feedback/Feedback";
+import About from "../screens/About/About";
 import AllGames from "../screens/Games/AllGames";
 import React from "react";
 import { AntDesign } from '@expo/vector-icons'; 
@@ -10,10 +10,10 @@ import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 
   const DashboardTabNavigator = createBottomTabNavigator(
     {
-      Profile: {
-        screen: Profile,
+      About: {
+        screen: About,
         navigationOptions: {
-          title: "Profile",
+          title: "About",
           tabBarLabel: "About",
           tabBarIcon: ({ tintColor }) => (
             // <MaterialCommunityIcons name="face-profile" size={24} color={tintColor} />
