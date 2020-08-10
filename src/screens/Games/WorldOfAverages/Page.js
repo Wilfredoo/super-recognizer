@@ -6,11 +6,29 @@ import ScoreResult from "../ScoreResult";
 export default function Page({
   navigation,
   game,
-  answer,
   currentPage,
   personToShow,
   score,
 }) {
+
+ const buttonsToRender = for (const [key, value] of Object.entries(personToShow.answers)) {
+    return (
+      <TouchableOpacity onPress={() => answer(true)}>
+      <Text
+        style={{
+          textAlign: "center",
+          margin: 20,
+          padding: 10,
+          backgroundColor: "gray",
+          width: 120,
+        }}
+      >
+        {personToShow.value}
+      </Text>
+    </TouchableOpacity>
+    );
+  }
+
   return (
     <>
       <View>
@@ -27,10 +45,14 @@ export default function Page({
                 <Text style={styles.text}>
                   What's the ethnicity of this person?
                 </Text>
-                <View style={{ flexDirection: "row" }}>
-                  <TouchableOpacity
-                    onPress={() => answer(true)}
-                  >
+                {buttonsToRender && {
+
+                 return (
+                  buttonsToRender
+                )}}
+
+                {/* <View style={{ flexDirection: "row" }}>
+                  <TouchableOpacity onPress={() => answer(true)}>
                     <Text
                       style={{
                         textAlign: "center",
@@ -43,9 +65,23 @@ export default function Page({
                       {personToShow.rightAnswer}
                     </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => answer(false)}
-                  >
+                  <TouchableOpacity onPress={() => answer(false)}>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        margin: 20,
+                        padding: 10,
+                        backgroundColor: "gray",
+                        width: 120,
+                      }}
+                    >
+                      {personToShow.wrongAnswer0}
+                    </Text>
+                  </TouchableOpacity>
+                </View> */}
+
+                {/* <View style={{ flexDirection: "row" }}>
+                  <TouchableOpacity onPress={() => answer(false)}>
                     <Text
                       style={{
                         textAlign: "center",
@@ -58,9 +94,7 @@ export default function Page({
                       {personToShow.wrongAnswer1}
                     </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => answer(false)}
-                  >
+                  <TouchableOpacity onPress={() => answer(false)}>
                     <Text
                       style={{
                         textAlign: "center",
@@ -73,7 +107,7 @@ export default function Page({
                       {personToShow.wrongAnswer2}
                     </Text>
                   </TouchableOpacity>
-                </View>
+                </View> */}
               </View>
             </>
           )}
