@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import "firebase/firestore";
 import ScoreResult from "../ScoreResult";
+import shuffle from "../../../Helpers/shuffle";
 
 export default function Page({
   navigation,
@@ -9,25 +10,15 @@ export default function Page({
   currentPage,
   personToShow,
   score,
+  answer,
 }) {
-
- const buttonsToRender = for (const [key, value] of Object.entries(personToShow.answers)) {
-    return (
-      <TouchableOpacity onPress={() => answer(true)}>
-      <Text
-        style={{
-          textAlign: "center",
-          margin: 20,
-          padding: 10,
-          backgroundColor: "gray",
-          width: 120,
-        }}
-      >
-        {personToShow.value}
-      </Text>
-    </TouchableOpacity>
-    );
+  const buttonValues = [];
+console.log("person to show", personToShow)
+  for (const [key, value] of Object.entries(personToShow.answers)) {
+    buttonValues.push({ key, value });
   }
+
+  const shuffledButtonValues = shuffle(buttonValues);
 
   return (
     <>
@@ -42,72 +33,29 @@ export default function Page({
                     uri: personToShow.photo,
                   }}
                 />
+
                 <Text style={styles.text}>
                   What's the ethnicity of this person?
                 </Text>
-                {buttonsToRender && {
 
-                 return (
-                  buttonsToRender
-                )}}
-
-                {/* <View style={{ flexDirection: "row" }}>
-                  <TouchableOpacity onPress={() => answer(true)}>
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        margin: 20,
-                        padding: 10,
-                        backgroundColor: "gray",
-                        width: 120,
-                      }}
-                    >
-                      {personToShow.rightAnswer}
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => answer(false)}>
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        margin: 20,
-                        padding: 10,
-                        backgroundColor: "gray",
-                        width: 120,
-                      }}
-                    >
-                      {personToShow.wrongAnswer0}
-                    </Text>
-                  </TouchableOpacity>
-                </View> */}
-
-                {/* <View style={{ flexDirection: "row" }}>
-                  <TouchableOpacity onPress={() => answer(false)}>
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        margin: 20,
-                        padding: 10,
-                        backgroundColor: "gray",
-                        width: 120,
-                      }}
-                    >
-                      {personToShow.wrongAnswer1}
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => answer(false)}>
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        margin: 20,
-                        padding: 10,
-                        backgroundColor: "gray",
-                        width: 120,
-                      }}
-                    >
-                      {personToShow.wrongAnswer2}
-                    </Text>
-                  </TouchableOpacity>
-                </View> */}
+                {shuffledButtonValues &&
+                  shuffledButtonValues.map((data) => {
+                    return (
+                      <TouchableOpacity onPress={() => answer(true)}>
+                        <Text
+                          style={{
+                            textAlign: "center",
+                            margin: 20,
+                            padding: 10,
+                            backgroundColor: "gray",
+                            width: 120,
+                          }}
+                        >
+                          {data.value}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
               </View>
             </>
           )}

@@ -1,4 +1,7 @@
- const processImages = async (imagesArray) => {
+import shuffle from "./shuffle"
+
+
+const processImages = async (imagesArray) => {
     const rightAnswerArrayIndex = await Math.floor(
       Math.random() * imagesArray.length
     );
@@ -40,13 +43,5 @@
     slicedShuffledMixedArray.unshift(oneRandomTruePic); // add the truthie at the beginning
     return slicedShuffledMixedArray
   };
-
-  function shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  }
 
   export default processImages
