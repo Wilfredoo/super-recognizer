@@ -13,6 +13,8 @@ export default function SpotTheImposter({ navigation }) {
   const [celebrityName, setCelebrityName] = useState(null);
   const store = firebase.firestore();
   const [picArrayState, setPicArrayState] = useState(null);
+  const [correctAnswer, setCorrectAnswer] = useState(null);
+  const [loading, setLoading] = useState(false);
   const celebritiesRef = store.collection("celebrities");
   const pageArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
@@ -57,16 +59,37 @@ export default function SpotTheImposter({ navigation }) {
     setScore(score + 1);
   };
 
+  // const answer = async (answer, correctPicture) => {
+  //   if (answer === "YES" && correctPicture) await increaseScore();
+  //   if (answer === "NO" && !correctPicture) await increaseScore();
+  //   nextPage();
+  // };
+
+
   const answer = async (answer, correctPicture) => {
-    if (answer === "YES" && correctPicture) await increaseScore();
-    if (answer === "NO" && !correctPicture) await increaseScore();
-    nextPage();
+    setLoading(true);
+    if ((answer === "YES" && correctPicture) || (answer === "NO" && !correctPicture)) {
+      await increaseScore();
+      setCorrectAnswer(true);
+    } else setCorrectAnswer(false);
+    setTimeout(function () {
+      nextPage();
+      setCorrectAnswer(null);
+      setLoading(false);
+    }, 1000);
   };
+
+
+
+
+
 
   const arrayOfPages = pageArray.map((data, i) => {
     if (picArrayState) {
       return (
         <Page
+        loading={loading}
+          correctAnswer={correctAnswer}
           key={i}
           navigation={navigation}
           game={game}

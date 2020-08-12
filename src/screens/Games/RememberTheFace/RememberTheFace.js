@@ -23,6 +23,28 @@ export default function RememberTheFace({ navigation }) {
     "black",
     "asian",
   ];
+
+  // const typeArray = [
+  //   "brunette_bald_male",
+  //   "brunette_shorthair_male",
+  //   "brunette_middlehair_male",
+  //   "brunette_longhair_male",
+  //   "light_brown_male",
+  //   "black_male",
+  //   "asian_male",
+  //   "blond_male",
+  //   "brunette_shorthair_female",
+  //   "brunette_longhair_female",
+  //   "blond_shorthair_female",
+  //   "blond_longhair_female",
+  //   "light_brown_female"
+  //   "black_female",
+  //   "asian_female",
+  // ];
+
+
+
+
   const genderArray = ["male", "female"];
   const randomTypeIndex = Math.floor(Math.random() * typeArray.length);
   const randomGenderIndex = Math.floor(Math.random() * genderArray.length);
@@ -93,6 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingBottom: 20,
     justifyContent: "center",
+
     alignItems: "center",
   },
   contentContainer: {
@@ -102,8 +125,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    position: "absolute",
-    top: 40,
     textAlign: "center",
+    marginBottom: 60,
+
   },
 });

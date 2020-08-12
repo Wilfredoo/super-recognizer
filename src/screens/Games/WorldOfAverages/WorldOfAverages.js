@@ -5,6 +5,7 @@ import Page from "./Page";
 import * as firebase from "firebase";
 import "firebase/firestore";
 import processImages3 from "../../../Helpers/processImages3.js";
+import typeArray from "./Types";
 
 export default function WorldOfAverages({ navigation }) {
   const { game } = navigation.state.params;
@@ -12,63 +13,10 @@ export default function WorldOfAverages({ navigation }) {
   const [currentPage, setCurrentPage] = useState(0);
   const store = firebase.firestore();
   const [picArrayState, setPicArrayState] = useState(null);
+  const [correctAnswer, setCorrectAnswer] = useState(null);
+  const [loading, setLoading] = useState(false);
   const worldOfAveragesRef = store.collection("world_of_averages");
   const pageArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-
-  const typeArray = [
-    "afghan",
-    "african_american",
-    "argentinian",
-    "austrian",
-    "dutch",
-    "belgian",
-    "brazilian",
-    "burmese",
-    "cambodian",
-    "english",
-    "ethiopian",
-    "filipino",
-    "finish",
-    "german",
-    "french",
-    "hungarian",
-    "indian",
-    "iranian",
-    "irish",
-    "israeli",
-    "italian",
-    "japanese",
-    "korean",
-    "lebanese",
-    "iraqi",
-    "egyptian",
-    "chad-cameroon",
-    "chinese",
-    "mexican",
-    "mongolian",
-    "peruvian",
-    "russian",
-    "samoan",
-    "puerto rican",
-    "polish",
-    "saudi",
-    "serbian",
-    "south african",
-    "south indian",
-    "spanish",
-    "swedish",
-    "swiss",
-    "taiwanese",
-    "thai",
-    "tibetan",
-    "turkish",
-    "ukranian",
-    "uzbek",
-    "vietnamese",
-    "welsh",
-    "west african",
-    "white american",
-  ];
 
   async function getAllImages() {
     const imagesSnapshot = await worldOfAveragesRef.get();
@@ -89,18 +37,27 @@ export default function WorldOfAverages({ navigation }) {
 
   const increaseScore = async () => {
     setScore(score + 1);
-    console.log("score", score);
   };
 
   const answer = async (answer) => {
-    if (answer) await increaseScore();
-    nextPage();
+    setLoading(true);
+    if (answer) {
+      await increaseScore();
+      setCorrectAnswer(true);
+    } else setCorrectAnswer(false);
+    setTimeout(function () {
+      nextPage();
+      setCorrectAnswer(null);
+      setLoading(false);
+    }, 1000);
   };
 
   const arrayOfPages = pageArray.map((data, i) => {
     if (picArrayState) {
       return (
         <Page
+          loading={loading}
+          correctAnswer={correctAnswer}
           key={i}
           navigation={navigation}
           game={game}
@@ -115,6 +72,7 @@ export default function WorldOfAverages({ navigation }) {
   });
   return (
     <>
+      {console.log("correct answer?", correctAnswer)}
       <Header navigation={navigation} />
       <View style={styles.container}>
         <Text style={styles.title}>World of Averages</Text>
@@ -141,8 +99,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    position: "absolute",
-    top: 40,
     textAlign: "center",
+    marginBottom: 30,
   },
 });

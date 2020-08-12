@@ -58,12 +58,13 @@ export default function ScoreResult({ navigation, game, score }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    // flex: 1,
+    // justifyContent: "center",
+    // alignItems: "center",
   },
   text: {
     marginBottom: 10,
+    textAlign:"center"
   },
   title: {
     fontSize: 20,

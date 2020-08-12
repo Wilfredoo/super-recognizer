@@ -12,6 +12,8 @@ export default function Page({
   celebrity,
   photoToShow,
   score,
+  loading,
+          correctAnswer
 }) {
   return (
     <>
@@ -27,14 +29,13 @@ export default function Page({
                   }}
                 />
                 <Text style={styles.text}>This is the real {celebrity}</Text>
-
                 <TouchableOpacity onPress={() => nextPage()}>
                   <Text
                     style={{
                       textAlign: "center",
                       margin: 20,
                       padding: 10,
-                      backgroundColor: "gray",
+                      backgroundColor: "#fcf7bb",
                       width: 200,
                     }}
                   >
@@ -54,7 +55,13 @@ export default function Page({
                   }}
                 />
                 <Text style={styles.text}>Is this an imposter?</Text>
+                {loading && correctAnswer === true && <Text style={styles.correctAnswer}>Correct ✔</Text>}
+                {loading && correctAnswer === false && (
+                    <Text style={styles.incorrectAnswer}>Incorrect X</Text>
+                  )}
 
+
+                {!loading &&
                 <View style={{ flexDirection: "row" }}>
                   <TouchableOpacity
                     onPress={() => answer("YES", photoToShow.rightAnswer)}
@@ -64,7 +71,7 @@ export default function Page({
                         textAlign: "center",
                         margin: 20,
                         padding: 10,
-                        backgroundColor: "gray",
+                        backgroundColor: "#fcf7bb",
                         width: 120,
                       }}
                     >
@@ -79,7 +86,7 @@ export default function Page({
                         textAlign: "center",
                         margin: 20,
                         padding: 10,
-                        backgroundColor: "gray",
+                        backgroundColor: "#fcf7bb",
                         width: 120,
                       }}
                     >
@@ -87,6 +94,7 @@ export default function Page({
                     </Text>
                   </TouchableOpacity>
                 </View>
+                }
               </View>
             </>
           )}
@@ -110,4 +118,12 @@ const styles = StyleSheet.create({
     bottom: 20,
     maxWidth: "90%",
   },
+  correctAnswer: {
+    fontSize:40,
+    color: "#005086"
+  },
+  incorrectAnswer: {
+    fontSize:40,
+    color: "#810000"
+  }
 });

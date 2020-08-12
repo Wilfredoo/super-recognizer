@@ -1,10 +1,19 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import "firebase/firestore";
 import ScoreResult from "../ScoreResult";
 import shuffle from "../../../Helpers/shuffle";
 
 export default function Page({
+  loading,
+  correctAnswer,
+
   navigation,
   game,
   currentPage,
@@ -16,7 +25,6 @@ export default function Page({
   let shuffledButtonValues = [];
 
   if (typeof personToShow === "undefined") {
-    console.log("oh snaps");
   } else {
     for (const [key, value] of Object.entries(personToShow.answers)) {
       buttonValues.push({ key, value });
@@ -40,29 +48,28 @@ export default function Page({
                 <Text style={styles.text}>
                   What's the ethnicity of this person?
                 </Text>
-                <View style={{ flexWrap: "wrap", flexDirection:"row", justifyContent:"center" }}>
-                  {shuffledButtonValues &&
-                    shuffledButtonValues.map((data) => {
+                <View
+                  style={{
+                    flexWrap: "wrap",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                  }}
+                >
+                  {!loading &&
+                    shuffledButtonValues &&
+                    shuffledButtonValues.map((data, index) => {
                       let typeAnswer = true;
                       if (data.key !== "rightAnswer") typeAnswer = false;
                       return (
                         <View
+                          key={index}
                           style={{
-                            alignSelf:"stretch",
-
-
-
+                            alignSelf: "stretch",
                           }}
                         >
                           <TouchableOpacity onPress={() => answer(typeAnswer)}>
                             <Text
-                              style={{
-                                textAlign: "center",
-                                margin: 10,
-                                padding: 10,
-                                backgroundColor: "#fcf7bb",
-                                width: 100,
-                              }}
+                              style={styles.button}
                             >
                               {data.value}
                             </Text>
@@ -70,6 +77,10 @@ export default function Page({
                         </View>
                       );
                     })}
+                  {loading && correctAnswer === true && <Text style={styles.correctAnswer}>Correct ✔</Text>}
+                  {loading && correctAnswer === false && (
+                    <Text style={styles.incorrectAnswer}>Incorrect X</Text>
+                  )}
                 </View>
               </View>
             </>
@@ -95,4 +106,20 @@ const styles = StyleSheet.create({
     bottom: 20,
     maxWidth: "90%",
   },
+  correctAnswer: {
+    fontSize:40,
+    color: "#005086"
+  },
+  incorrectAnswer: {
+    fontSize:40,
+    color: "#810000"
+  }, button:
+
+  {
+    textAlign: "center",
+    margin: 10,
+    padding: 10,
+    backgroundColor: "#fcf7bb",
+    width: 100,
+  }
 });
