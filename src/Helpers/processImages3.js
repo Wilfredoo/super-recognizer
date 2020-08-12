@@ -8,7 +8,7 @@ const processImages3 = async (images, typeArray) => {
     const filteredWrongTypes = shuffledTypes.filter(
       (data) => data !== docSnapshot.data().type
     );
-    const slicedShuffledWrongTypes = filteredWrongTypes.slice(0, 3);
+    const slicedShuffledWrongTypes = filteredWrongTypes.slice(0, 5);
 
     allImages.push({
       photo: docSnapshot.data().photo,
@@ -17,6 +17,8 @@ const processImages3 = async (images, typeArray) => {
         wrongAnswer0: slicedShuffledWrongTypes[0],
         wrongAnswer1: slicedShuffledWrongTypes[1],
         wrongAnswer2: slicedShuffledWrongTypes[2],
+        wrongAnswer3: slicedShuffledWrongTypes[3],
+        wrongAnswer4: slicedShuffledWrongTypes[4],
       }
     });
   });

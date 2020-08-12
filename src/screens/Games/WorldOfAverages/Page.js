@@ -13,12 +13,16 @@ export default function Page({
   answer,
 }) {
   const buttonValues = [];
-console.log("person to show", personToShow)
-  for (const [key, value] of Object.entries(personToShow.answers)) {
-    buttonValues.push({ key, value });
-  }
+  let shuffledButtonValues = [];
 
-  const shuffledButtonValues = shuffle(buttonValues);
+  if (typeof personToShow === "undefined") {
+    console.log("oh snaps");
+  } else {
+    for (const [key, value] of Object.entries(personToShow.answers)) {
+      buttonValues.push({ key, value });
+    }
+    shuffledButtonValues = shuffle(buttonValues);
+  }
 
   return (
     <>
@@ -33,29 +37,40 @@ console.log("person to show", personToShow)
                     uri: personToShow.photo,
                   }}
                 />
-
                 <Text style={styles.text}>
                   What's the ethnicity of this person?
                 </Text>
-
-                {shuffledButtonValues &&
-                  shuffledButtonValues.map((data) => {
-                    return (
-                      <TouchableOpacity onPress={() => answer(true)}>
-                        <Text
+                <View style={{ flexWrap: "wrap", flexDirection:"row", justifyContent:"center" }}>
+                  {shuffledButtonValues &&
+                    shuffledButtonValues.map((data) => {
+                      let typeAnswer = true;
+                      if (data.key !== "rightAnswer") typeAnswer = false;
+                      return (
+                        <View
                           style={{
-                            textAlign: "center",
-                            margin: 20,
-                            padding: 10,
-                            backgroundColor: "gray",
-                            width: 120,
+                            alignSelf:"stretch",
+
+
+
                           }}
                         >
-                          {data.value}
-                        </Text>
-                      </TouchableOpacity>
-                    );
-                  })}
+                          <TouchableOpacity onPress={() => answer(typeAnswer)}>
+                            <Text
+                              style={{
+                                textAlign: "center",
+                                margin: 10,
+                                padding: 10,
+                                backgroundColor: "#fcf7bb",
+                                width: 100,
+                              }}
+                            >
+                              {data.value}
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      );
+                    })}
+                </View>
               </View>
             </>
           )}

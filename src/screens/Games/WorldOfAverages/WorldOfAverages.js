@@ -40,13 +40,42 @@ export default function WorldOfAverages({ navigation }) {
     "japanese",
     "korean",
     "lebanese",
+    "iraqi",
+    "egyptian",
+    "chad-cameroon",
+    "chinese",
+    "mexican",
+    "mongolian",
+    "peruvian",
+    "russian",
+    "samoan",
+    "puerto rican",
+    "polish",
+    "saudi",
+    "serbian",
+    "south african",
+    "south indian",
+    "spanish",
+    "swedish",
+    "swiss",
+    "taiwanese",
+    "thai",
+    "tibetan",
+    "turkish",
+    "ukranian",
+    "uzbek",
+    "vietnamese",
+    "welsh",
+    "west african",
+    "white american",
   ];
-
-  // alones - egyptian, chad camerun, iraqi
 
   async function getAllImages() {
     const imagesSnapshot = await worldOfAveragesRef.get();
-    const slicedShuffledMixedArray = await processImages3(imagesSnapshot, typeArray);
+    const slicedShuffledMixedArray = await processImages3(
+      imagesSnapshot,
+      typeArray
+    );
     setPicArrayState(slicedShuffledMixedArray);
   }
 
@@ -60,9 +89,10 @@ export default function WorldOfAverages({ navigation }) {
 
   const increaseScore = async () => {
     setScore(score + 1);
+    console.log("score", score);
   };
 
-  const answer = async (answer, correctPicture) => {
+  const answer = async (answer) => {
     if (answer) await increaseScore();
     nextPage();
   };
