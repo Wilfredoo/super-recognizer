@@ -9,9 +9,11 @@ import processImages from "../../../Helpers/processImages.js";
 export default function RememberTheFace({ navigation }) {
   const { game } = navigation.state.params;
   const [score, setScore] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
-  const store = firebase.firestore();
   const [picArrayState, setPicArrayState] = useState(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [correctAnswer, setCorrectAnswer] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const store = firebase.firestore();
   const londonFacesRef = store.collection("london_faces");
   const pageArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
@@ -42,9 +44,6 @@ export default function RememberTheFace({ navigation }) {
   //   "asian_female",
   // ];
 
-
-
-
   const genderArray = ["male", "female"];
   const randomTypeIndex = Math.floor(Math.random() * typeArray.length);
   const randomGenderIndex = Math.floor(Math.random() * genderArray.length);
@@ -74,11 +73,23 @@ export default function RememberTheFace({ navigation }) {
     setScore(score + 1);
   };
 
+
   const answer = async (answer, correctPicture) => {
-    if (answer === "YES" && correctPicture) await increaseScore();
-    if (answer === "NO" && !correctPicture) await increaseScore();
-    nextPage();
+    setLoading(true);
+    if (
+      (answer === "YES" && correctPicture) ||
+      (answer === "NO" && !correctPicture)
+    ) {
+      await increaseScore();
+      setCorrectAnswer(true);
+    } else setCorrectAnswer(false);
+    setTimeout(function () {
+      nextPage();
+      setCorrectAnswer(null);
+      setLoading(false);
+    }, 500);
   };
+
 
   const arrayOfPages = pageArray.map((data, i) => {
     if (picArrayState) {
@@ -86,6 +97,8 @@ export default function RememberTheFace({ navigation }) {
         <Page
           key={i}
           navigation={navigation}
+          loading={loading}
+          correctAnswer={correctAnswer}
           game={game}
           answer={answer}
           nextPage={nextPage}
@@ -127,6 +140,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     marginBottom: 60,
-
   },
 });

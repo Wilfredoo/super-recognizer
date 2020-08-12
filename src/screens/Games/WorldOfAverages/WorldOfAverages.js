@@ -49,7 +49,7 @@ export default function WorldOfAverages({ navigation }) {
       nextPage();
       setCorrectAnswer(null);
       setLoading(false);
-    }, 1000);
+    }, 500);
   };
 
   const arrayOfPages = pageArray.map((data, i) => {

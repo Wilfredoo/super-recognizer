@@ -18,7 +18,15 @@ export default function SpotTheImposter({ navigation }) {
   const celebritiesRef = store.collection("celebrities");
   const pageArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
-  const typeArray = ["Trump", "Shakira", "Bruno Mars", "Ed Sheeran", "Taylor Swift", "Tom Cruise", "Keanu Reeves"];
+  const typeArray = [
+    "Trump",
+    "Shakira",
+    "Bruno Mars",
+    "Ed Sheeran",
+    "Taylor Swift",
+    "Tom Cruise",
+    "Keanu Reeves",
+  ];
 
   const randomTypeIndex = Math.floor(Math.random() * typeArray.length);
 
@@ -36,8 +44,7 @@ export default function SpotTheImposter({ navigation }) {
     const realImagesDocs = await realImagesSnapshot.docs;
     const fakeImagesDocs = await fakeImagesSnapshot.docs;
     await realImagesDocs.forEach((docSnapshot) => {
-      setCelebrityName(docSnapshot.data().name)
-      
+      setCelebrityName(docSnapshot.data().name);
     });
 
     const slicedShuffledMixedArray = await processImages2(
@@ -59,16 +66,12 @@ export default function SpotTheImposter({ navigation }) {
     setScore(score + 1);
   };
 
-  // const answer = async (answer, correctPicture) => {
-  //   if (answer === "YES" && correctPicture) await increaseScore();
-  //   if (answer === "NO" && !correctPicture) await increaseScore();
-  //   nextPage();
-  // };
-
-
   const answer = async (answer, correctPicture) => {
     setLoading(true);
-    if ((answer === "YES" && correctPicture) || (answer === "NO" && !correctPicture)) {
+    if (
+      (answer === "YES" && correctPicture) ||
+      (answer === "NO" && !correctPicture)
+    ) {
       await increaseScore();
       setCorrectAnswer(true);
     } else setCorrectAnswer(false);
@@ -76,19 +79,14 @@ export default function SpotTheImposter({ navigation }) {
       nextPage();
       setCorrectAnswer(null);
       setLoading(false);
-    }, 1000);
+    }, 500);
   };
-
-
-
-
-
 
   const arrayOfPages = pageArray.map((data, i) => {
     if (picArrayState) {
       return (
         <Page
-        loading={loading}
+          loading={loading}
           correctAnswer={correctAnswer}
           key={i}
           navigation={navigation}

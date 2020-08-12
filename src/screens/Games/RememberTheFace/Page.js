@@ -11,6 +11,8 @@ export default function Page({
   currentPage,
   photoToShow,
   score,
+  loading,
+  correctAnswer
 }) {
   return (
     <>
@@ -28,14 +30,7 @@ export default function Page({
                 <Text style={styles.text}>Remember this face</Text>
                 <TouchableOpacity onPress={() => nextPage()}>
                   <Text
-                    style={{
-                      textAlign: "center",
-                      margin: 20,
-                      padding: 10,
-                      backgroundColor: "#1b6ca8",
-                      color: "#fff",
-                      width: 200,
-                    }}
+                    style={styles.start}
                   >
                     Start
                   </Text>
@@ -53,20 +48,19 @@ export default function Page({
                   }}
                 />
                 <Text style={styles.text}>Is this the face you saw?</Text>
-
+                {loading && correctAnswer === true && (
+                  <Text style={styles.correctAnswer}>Correct ✔</Text>
+                )}
+                {loading && correctAnswer === false && (
+                  <Text style={styles.incorrectAnswer}>Incorrect X</Text>
+                )}
+                {!loading &&
                 <View style={{flexDirection: "row"}}>
                 <TouchableOpacity
                   onPress={() => answer("YES", photoToShow.rightAnswer)}
                 >
                   <Text
-                    style={{
-                      textAlign: "center",
-                      margin: 20,
-                      padding: 10,
-                      backgroundColor: "#1b6ca8",
-                      color: "#fff",
-                      width: 120,
-                    }}
+                    style={styles.button}
                   >
                     Yes
                   </Text>
@@ -75,19 +69,13 @@ export default function Page({
                   onPress={() => answer("NO", photoToShow.rightAnswer)}
                 >
                   <Text
-                    style={{
-                      textAlign: "center",
-                      margin: 20,
-                      padding: 10,
-                      backgroundColor: "#1b6ca8",
-                      color: "#fff",
-                      width: 120,
-                    }}
+                    style={styles.button}
                   >
                     No
                   </Text>
                 </TouchableOpacity>
               </View>
+              }
               </View>
 
             </>
@@ -117,4 +105,27 @@ const styles = StyleSheet.create({
     bottom: 20,
     maxWidth: "90%",
   },
+  correctAnswer: {
+    fontSize: 40,
+    color: "#005086",
+  },
+  incorrectAnswer: {
+    fontSize: 40,
+    color: "#810000",
+  },
+  button: {
+    textAlign: "center",
+    margin: 20,
+    padding: 10,
+    backgroundColor: "#fcf7bb",
+    width: 120,
+  }, start:
+  {
+    textAlign: "center",
+    margin: 20,
+    padding: 10,
+    backgroundColor: "#1b6ca8",
+    color: "#fff",
+    width: 200,
+  }
 });

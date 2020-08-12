@@ -13,7 +13,7 @@ export default function Page({
   photoToShow,
   score,
   loading,
-          correctAnswer
+  correctAnswer,
 }) {
   return (
     <>
@@ -31,13 +31,7 @@ export default function Page({
                 <Text style={styles.text}>This is the real {celebrity}</Text>
                 <TouchableOpacity onPress={() => nextPage()}>
                   <Text
-                    style={{
-                      textAlign: "center",
-                      margin: 20,
-                      padding: 10,
-                      backgroundColor: "#fcf7bb",
-                      width: 200,
-                    }}
+                    style={styles.start}
                   >
                     Start
                   </Text>
@@ -55,46 +49,35 @@ export default function Page({
                   }}
                 />
                 <Text style={styles.text}>Is this an imposter?</Text>
-                {loading && correctAnswer === true && <Text style={styles.correctAnswer}>Correct ✔</Text>}
+                {loading && correctAnswer === true && (
+                  <Text style={styles.correctAnswer}>Correct ✔</Text>
+                )}
                 {loading && correctAnswer === false && (
-                    <Text style={styles.incorrectAnswer}>Incorrect X</Text>
-                  )}
+                  <Text style={styles.incorrectAnswer}>Incorrect X</Text>
+                )}
 
-
-                {!loading &&
-                <View style={{ flexDirection: "row" }}>
-                  <TouchableOpacity
-                    onPress={() => answer("YES", photoToShow.rightAnswer)}
-                  >
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        margin: 20,
-                        padding: 10,
-                        backgroundColor: "#fcf7bb",
-                        width: 120,
-                      }}
+                {!loading && (
+                  <View style={{ flexDirection: "row" }}>
+                    <TouchableOpacity
+                      onPress={() => answer("YES", photoToShow.rightAnswer)}
                     >
-                      Yes
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => answer("NO", photoToShow.rightAnswer)}
-                  >
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        margin: 20,
-                        padding: 10,
-                        backgroundColor: "#fcf7bb",
-                        width: 120,
-                      }}
+                      <Text
+                        style={styles.button}
+                      >
+                        Yes
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => answer("NO", photoToShow.rightAnswer)}
                     >
-                      No
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                }
+                      <Text
+                        style={styles.button}
+                      >
+                        No
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
               </View>
             </>
           )}
@@ -119,11 +102,26 @@ const styles = StyleSheet.create({
     maxWidth: "90%",
   },
   correctAnswer: {
-    fontSize:40,
-    color: "#005086"
+    fontSize: 40,
+    color: "#005086",
   },
   incorrectAnswer: {
-    fontSize:40,
-    color: "#810000"
+    fontSize: 40,
+    color: "#810000",
+  },
+  button:
+  {
+    textAlign: "center",
+    margin: 20,
+    padding: 10,
+    backgroundColor: "#fcf7bb",
+    width: 120,
+  },
+  start: {
+    textAlign: "center",
+    margin: 20,
+    padding: 10,
+    backgroundColor: "#fcf7bb",
+    width: 200,
   }
 });
