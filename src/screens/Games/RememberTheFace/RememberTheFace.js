@@ -65,6 +65,10 @@ export default function RememberTheFace({ navigation }) {
     getAllImages();
   }, []);
 
+  const shuffle = () => {
+    getAllImages()
+  };
+
   const nextPage = () => {
     setCurrentPage((currentPage) => currentPage + 1);
   };
@@ -72,7 +76,6 @@ export default function RememberTheFace({ navigation }) {
   const increaseScore = async () => {
     setScore(score + 1);
   };
-
 
   const answer = async (answer, correctPicture) => {
     setLoading(true);
@@ -90,7 +93,6 @@ export default function RememberTheFace({ navigation }) {
     }, 500);
   };
 
-
   const arrayOfPages = pageArray.map((data, i) => {
     if (picArrayState) {
       return (
@@ -102,6 +104,7 @@ export default function RememberTheFace({ navigation }) {
           game={game}
           answer={answer}
           nextPage={nextPage}
+          shuffle={shuffle}
           currentPage={currentPage}
           photoToShow={picArrayState[currentPage]}
           score={score}

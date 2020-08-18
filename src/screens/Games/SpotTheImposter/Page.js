@@ -8,6 +8,7 @@ export default function Page({
   game,
   answer,
   nextPage,
+  shuffle,
   currentPage,
   celebrity,
   photoToShow,
@@ -34,6 +35,13 @@ export default function Page({
                     style={styles.start}
                   >
                     Start
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => shuffle()}>
+                  <Text
+                    style={styles.start}
+                  >
+                    New Celebrity
                   </Text>
                 </TouchableOpacity>
               </View>

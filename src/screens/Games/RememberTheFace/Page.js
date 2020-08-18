@@ -8,11 +8,12 @@ export default function Page({
   game,
   answer,
   nextPage,
+  shuffle,
   currentPage,
   photoToShow,
   score,
   loading,
-  correctAnswer
+  correctAnswer,
 }) {
   return (
     <>
@@ -29,11 +30,11 @@ export default function Page({
                 />
                 <Text style={styles.text}>Remember this face</Text>
                 <TouchableOpacity onPress={() => nextPage()}>
-                  <Text
-                    style={styles.start}
-                  >
-                    Start
-                  </Text>
+                  <Text style={styles.start}>Start</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => shuffle()}>
+                  <Text style={styles.start}>New Face</Text>
                 </TouchableOpacity>
               </View>
             </>
@@ -54,40 +55,26 @@ export default function Page({
                 {loading && correctAnswer === false && (
                   <Text style={styles.incorrectAnswer}>Incorrect X</Text>
                 )}
-                {!loading &&
-                <View style={{flexDirection: "row"}}>
-                <TouchableOpacity
-                  onPress={() => answer("YES", photoToShow.rightAnswer)}
-                >
-                  <Text
-                    style={styles.button}
-                  >
-                    Yes
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => answer("NO", photoToShow.rightAnswer)}
-                >
-                  <Text
-                    style={styles.button}
-                  >
-                    No
-                  </Text>
-                </TouchableOpacity>
+                {!loading && (
+                  <View style={{ flexDirection: "row" }}>
+                    <TouchableOpacity
+                      onPress={() => answer("YES", photoToShow.rightAnswer)}
+                    >
+                      <Text style={styles.button}>Yes</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => answer("NO", photoToShow.rightAnswer)}
+                    >
+                      <Text style={styles.button}>No</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
               </View>
-              }
-              </View>
-
             </>
           )}
           {currentPage === 11 && (
             <>
-              <ScoreResult
-                navigation={navigation}
-                game={game}
-                score={score}
-              />
-            
+              <ScoreResult navigation={navigation} game={game} score={score} />
             </>
           )}
         </>
@@ -119,13 +106,13 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#fcf7bb",
     width: 120,
-  }, start:
-  {
+  },
+  start: {
     textAlign: "center",
     margin: 20,
     padding: 10,
     backgroundColor: "#1b6ca8",
     color: "#fff",
     width: 200,
-  }
+  },
 });

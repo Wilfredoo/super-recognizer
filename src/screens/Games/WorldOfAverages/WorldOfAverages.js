@@ -31,6 +31,16 @@ export default function WorldOfAverages({ navigation }) {
     getAllImages();
   }, []);
 
+
+
+
+
+
+
+
+
+
+
   const nextPage = () => {
     setCurrentPage((currentPage) => currentPage + 1);
   };
@@ -72,7 +82,6 @@ export default function WorldOfAverages({ navigation }) {
   });
   return (
     <>
-      {console.log("correct answer?", correctAnswer)}
       <Header navigation={navigation} />
       <View style={styles.container}>
         <Text style={styles.title}>World of Averages</Text>

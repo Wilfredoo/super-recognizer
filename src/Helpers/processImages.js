@@ -7,7 +7,6 @@ const processImages = async (imagesArray) => {
     );
     let picsArray = [];
     await imagesArray.forEach((docSnapshot, index) => {
-      console.log("doc snap data", docSnapshot.data())
       for (let i = 0; i < docSnapshot.data().photos.length; i++) {
         if (index === rightAnswerArrayIndex) {
           picsArray.push({

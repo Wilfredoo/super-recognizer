@@ -58,6 +58,10 @@ export default function SpotTheImposter({ navigation }) {
     getAllImages();
   }, []);
 
+  const shuffle = () => {
+    getAllImages()
+  };
+
   const nextPage = () => {
     setCurrentPage((currentPage) => currentPage + 1);
   };
@@ -93,6 +97,7 @@ export default function SpotTheImposter({ navigation }) {
           game={game}
           answer={answer}
           nextPage={nextPage}
+          shuffle={shuffle}
           currentPage={currentPage}
           photoToShow={picArrayState[currentPage]}
           score={score}

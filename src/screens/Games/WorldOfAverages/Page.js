@@ -1,11 +1,5 @@
-import React, { useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import "firebase/firestore";
 import ScoreResult from "../ScoreResult";
 import shuffle from "../../../Helpers/shuffle";
@@ -13,7 +7,6 @@ import shuffle from "../../../Helpers/shuffle";
 export default function Page({
   loading,
   correctAnswer,
-
   navigation,
   game,
   currentPage,
@@ -21,11 +14,18 @@ export default function Page({
   score,
   answer,
 }) {
+  const [rightType, setRightType] = useState("macedonian");
+
   const buttonValues = [];
   let shuffledButtonValues = [];
 
-  if (typeof personToShow === "undefined") {
-  } else {
+  useEffect(() => {
+    shuffledButtonValues.map((data) => {
+      if (data.key === "rightAnswer") setRightType(data.value);
+    });
+  }, []);
+
+  if (typeof personToShow !== "undefined") {
     for (const [key, value] of Object.entries(personToShow.answers)) {
       buttonValues.push({ key, value });
     }
@@ -68,18 +68,28 @@ export default function Page({
                           }}
                         >
                           <TouchableOpacity onPress={() => answer(typeAnswer)}>
-                            <Text
-                              style={styles.button}
-                            >
-                              {data.value}
-                            </Text>
+                            <Text style={styles.button}>{data.value}</Text>
                           </TouchableOpacity>
                         </View>
                       );
                     })}
-                  {loading && correctAnswer === true && <Text style={styles.correctAnswer}>Correct ✔</Text>}
+                  {loading && correctAnswer === true && (
+                    <Text style={styles.correctAnswer}>Correct ✔</Text>
+                  )}
                   {loading && correctAnswer === false && (
-                    <Text style={styles.incorrectAnswer}>Incorrect X</Text>
+                    <>
+                        <Text style={styles.incorrectAnswer}>Incorrect X{"\n"}</Text>
+                   
+                    </>
+                  )}
+                   {loading && correctAnswer === false && (
+                    <>
+                  
+                        <Text style={styles.rightType}>
+                          Right Answer:{" "}
+                          {rightType}
+                        </Text>
+                    </>
                   )}
                 </View>
               </View>
@@ -107,19 +117,22 @@ const styles = StyleSheet.create({
     maxWidth: "90%",
   },
   correctAnswer: {
-    fontSize:40,
-    color: "#005086"
+    fontSize: 40,
+    color: "#005086",
   },
   incorrectAnswer: {
-    fontSize:40,
-    color: "#810000"
-  }, button:
-
-  {
+    fontSize: 40,
+    color: "#810000",
+  },
+  rightType: {
+    fontSize: 25,
+    color: "#810000",
+  },
+  button: {
     textAlign: "center",
     margin: 10,
     padding: 10,
     backgroundColor: "#fcf7bb",
     width: 100,
-  }
+  },
 });
