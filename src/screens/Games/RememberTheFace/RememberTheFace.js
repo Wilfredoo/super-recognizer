@@ -18,31 +18,31 @@ export default function RememberTheFace({ navigation }) {
   const pageArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
   const typeArray = [
-    "brunette_shorthair",
-    "brunette_longhair",
-    "blond",
-    "light_brown",
-    "black",
-    "asian",
+    "longbrownhair_white_female_young",
+    "shorthair_white_female_young",
+    "dark_fat_female",
+    "longhair_blond_female",
+    "shorthair_blond_female",
+    "white_fat_female",
+    "black_female",
+    "shorthair_tanned_female_adult",
+    "longhair_tanned_female_adult",
+    "longhair_tanned_female_young",
+    "dark_female",
+    "asian_female",
+    "shorthair_white_male_young",
+    "longhair_white_male_young",
+    "shortbrownhair_white_male_young",
+    "shorthair_tanned_male_young",
+    "shorthair_tanned_male_adult",
+    "shorthair_tanned_male_adult",
+    "shorthair_dark_male",
+    "blond_shorthair_male",
+    "bald_tanned_male",
+    "bald_white_male",
+    "asian_male",
+    "black_male",
   ];
-
-  // const typeArray = [
-  //   "brunette_bald_male",
-  //   "brunette_shorthair_male",
-  //   "brunette_middlehair_male",
-  //   "brunette_longhair_male",
-  //   "light_brown_male",
-  //   "black_male",
-  //   "asian_male",
-  //   "blond_male",
-  //   "brunette_shorthair_female",
-  //   "brunette_longhair_female",
-  //   "blond_shorthair_female",
-  //   "blond_longhair_female",
-  //   "light_brown_female"
-  //   "black_female",
-  //   "asian_female",
-  // ];
 
   const genderArray = ["male", "female"];
   const randomTypeIndex = Math.floor(Math.random() * typeArray.length);
@@ -50,10 +50,8 @@ export default function RememberTheFace({ navigation }) {
 
   async function getAllImages() {
     console.log("type is gonna be: ", typeArray[randomTypeIndex]);
-    console.log("gender is gonna be: ", genderArray[randomGenderIndex]);
     const imagesSnapshot = await londonFacesRef
       .where("type", "==", typeArray[randomTypeIndex])
-      .where("gender", "==", genderArray[randomGenderIndex])
       .get();
 
     const imagesArray = await imagesSnapshot.docs;
@@ -66,7 +64,7 @@ export default function RememberTheFace({ navigation }) {
   }, []);
 
   const shuffle = () => {
-    getAllImages()
+    getAllImages();
   };
 
   const nextPage = () => {

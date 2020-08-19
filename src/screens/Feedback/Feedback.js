@@ -57,7 +57,7 @@ export default function Feedback() {
         onChangeText={(name) => setName(name)}
         defaultValue={name}
         style={styles.nameInput}
-        placeholder="Name"
+        placeholder="Your Name"
       />
       <TextInput
         maxLength={100}

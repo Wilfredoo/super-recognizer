@@ -26,6 +26,9 @@ export default function SpotTheImposter({ navigation }) {
     "Taylor Swift",
     "Tom Cruise",
     "Keanu Reeves",
+    "Kit Harrington",
+    "Lili Reinhart",
+    "Michelle Obama"
   ];
 
   const randomTypeIndex = Math.floor(Math.random() * typeArray.length);
