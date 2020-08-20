@@ -8,7 +8,7 @@ import processImages3 from "../../../Helpers/processImages3.js";
 import typeArray from "./Types";
 
 export default function WorldOfAverages({ navigation }) {
-  const { game } = navigation.state.params;
+  const { game, level } = navigation.state.params;
   const [score, setScore] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const store = firebase.firestore();
@@ -20,9 +20,10 @@ export default function WorldOfAverages({ navigation }) {
 
   async function getAllImages() {
     const imagesSnapshot = await worldOfAveragesRef.get();
+
     const slicedShuffledMixedArray = await processImages3(
       imagesSnapshot,
-      typeArray
+      typeArray, level
     );
     setPicArrayState(slicedShuffledMixedArray);
   }
@@ -30,16 +31,6 @@ export default function WorldOfAverages({ navigation }) {
   useEffect(() => {
     getAllImages();
   }, []);
-
-
-
-
-
-
-
-
-
-
 
   const nextPage = () => {
     setCurrentPage((currentPage) => currentPage + 1);
@@ -71,6 +62,7 @@ export default function WorldOfAverages({ navigation }) {
           key={i}
           navigation={navigation}
           game={game}
+          level={level}
           answer={answer}
           nextPage={nextPage}
           currentPage={currentPage}

@@ -56,7 +56,7 @@ export default function Page({
                     uri: photoToShow.url,
                   }}
                 />
-                <Text style={styles.text}>Is this an imposter?</Text>
+                <Text style={styles.text}>Is this the real {celebrity}?</Text>
                 {loading && correctAnswer === true && (
                   <Text style={styles.correctAnswer}>Correct ✔</Text>
                 )}
@@ -67,7 +67,7 @@ export default function Page({
                 {!loading && (
                   <View style={{ flexDirection: "row" }}>
                     <TouchableOpacity
-                      onPress={() => answer("YES", photoToShow.rightAnswer)}
+                      onPress={() => answer("NO", photoToShow.rightAnswer)}
                     >
                       <Text
                         style={styles.button}
@@ -76,7 +76,7 @@ export default function Page({
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      onPress={() => answer("NO", photoToShow.rightAnswer)}
+                      onPress={() => answer("YES", photoToShow.rightAnswer)}
                     >
                       <Text
                         style={styles.button}

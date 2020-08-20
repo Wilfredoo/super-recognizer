@@ -5,6 +5,7 @@ import Back from "../Repetitive/Back";
 
 export default function GameIntro({ navigation }) {
   const { game } = navigation.state.params;
+  const levels = ["I", "II", "III"];
 
   return (
     <>
@@ -33,28 +34,35 @@ export default function GameIntro({ navigation }) {
           <>
             <Text style={styles.text}>World Of Averages</Text>
             <Text style={styles.text}>
-              There is an average face per country. Your task is to identify the correct one.
+              There is an average face per country. Your task is to identify the
+              correct one.
             </Text>
           </>
         )}
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate(game, {
-              game: game,
-            })
-          }
-        >
-          <Text
-            style={{
-              backgroundColor: "#1b6ca8",
-              paddingVertical: 10,
-              paddingHorizontal: 18,
-              color: "white",
-            }}
-          >
-            START
-          </Text>
-        </TouchableOpacity>
+
+        {(game === "WorldOfAverages" ||
+          game === "RememberTheFace") &&
+            levels.map((data) => {
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate(game, {
+                      game: game,
+                      level: data,
+                    })
+                  }
+                >
+                  <Text
+                    style={{
+                      paddingVertical: 10,
+                      paddingHorizontal: 18,
+                    }}
+                  >
+                    Level {data}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
       </View>
     </>
   );

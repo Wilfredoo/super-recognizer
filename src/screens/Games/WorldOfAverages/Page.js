@@ -9,6 +9,7 @@ export default function Page({
   correctAnswer,
   navigation,
   game,
+  level,
   currentPage,
   personToShow,
   score,
@@ -20,6 +21,7 @@ export default function Page({
   let shuffledButtonValues = [];
 
   useEffect(() => {
+    console.log("game", game, "leveel", level);
     shuffledButtonValues.map((data) => {
       if (data.key === "rightAnswer") setRightType(data.value);
     });
@@ -39,12 +41,43 @@ export default function Page({
           {currentPage < 10 && (
             <>
               <View style={styles.container}>
+
+              {level === "III" &&
+              <>
+              {console.log("yes level 3")}
+
                 <Image
+                  style={styles.imageIIIA}
+                  source={{
+                    uri: personToShow.photo,
+                  }}
+                  
+                />
+
+                <Image
+                  style={styles.imageIIIB}
+                  source={{
+                    uri: personToShow.photo,
+                  }}
+                  
+                />
+                </>
+              }
+              {level !== "III" &&
+              <>
+              {console.log("not level 3")}
+
+
+<Image
                   style={styles.image}
                   source={{
                     uri: personToShow.photo,
                   }}
+                  
                 />
+                </>
+                }
+
                 <Text style={styles.text}>
                   What's the ethnicity of this person?
                 </Text>
@@ -78,17 +111,16 @@ export default function Page({
                   )}
                   {loading && correctAnswer === false && (
                     <>
-                        <Text style={styles.incorrectAnswer}>Incorrect X{"\n"}</Text>
-                   
+                      <Text style={styles.incorrectAnswer}>
+                        Incorrect X{"\n"}
+                      </Text>
                     </>
                   )}
-                   {loading && correctAnswer === false && (
+                  {loading && correctAnswer === false && (
                     <>
-                  
-                        <Text style={styles.rightType}>
-                          Right Answer:{" "}
-                          {rightType}
-                        </Text>
+                      <Text style={styles.rightType}>
+                        Right Answer: {rightType}
+                      </Text>
                     </>
                   )}
                 </View>
@@ -108,7 +140,38 @@ export default function Page({
 
 const styles = StyleSheet.create({
   text: { marginBottom: 20, textAlign: "center", maxWidth: "90%" },
-  image: { width: 300, height: 300, marginBottom: 20, alignItems: "center" },
+  imageIIIA: {
+    width: 300,
+    height: 300,
+    marginBottom: 20,
+    alignItems: "center",
+    tintColor: "#52575d",
+
+    borderRadius:400,
+
+
+  },
+  imageIIIB: {
+    width: 300,
+    height: 300,
+    marginBottom: 20,
+    alignItems: "center",
+    position: "absolute",
+    opacity: 0.15,
+    borderRadius:10,
+    borderRadius:400,
+
+
+
+
+  },
+  image: {
+    width: 300,
+    height: 300,
+    marginBottom: 20,
+    alignItems: "center",
+
+  },
   container: { alignItems: "center" },
   quote: {
     textAlign: "center",
