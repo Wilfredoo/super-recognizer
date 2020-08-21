@@ -12,12 +12,58 @@ export default function RememberTheFace({ navigation }) {
   const [score, setScore] = useState(0);
   const [picArrayState, setPicArrayState] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [currentPhoto, setCurrentPhoto] = useState(0);
   const [correctAnswer, setCorrectAnswer] = useState(null);
   const [loading, setLoading] = useState(false);
   const store = firebase.firestore();
   const londonFacesRef = store.collection("london_faces");
   const asianGirlsRef = store.collection("asian_girls");
-  const pageArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const pageArray = [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+  ];
+  const photosArray = [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+  ];
 
   const typeArray = [
     "longbrownhair_white_female_young",
@@ -46,12 +92,9 @@ export default function RememberTheFace({ navigation }) {
     "black_male",
   ];
 
-  const genderArray = ["male", "female"];
   const randomTypeIndex = Math.floor(Math.random() * typeArray.length);
 
   async function getAllImages() {
-    console.log("type is gonna be: ", typeArray[randomTypeIndex]);
-    console.log("level here in getall", level);
     let imagesSnapshot = [];
     let imagesArray = [];
     let slicedShuffledMixedArray = [];
@@ -66,7 +109,6 @@ export default function RememberTheFace({ navigation }) {
       imagesSnapshot = await asianGirlsRef.get();
       imagesArray = await imagesSnapshot.docs;
       slicedShuffledMixedArray = await processImagesII(imagesArray);
-      // console.log("sliced back", slicedShuffledMixedArray)
     }
     setPicArrayState(slicedShuffledMixedArray);
   }
@@ -81,6 +123,9 @@ export default function RememberTheFace({ navigation }) {
 
   const nextPage = () => {
     setCurrentPage((currentPage) => currentPage + 1);
+    console.log("current page", currentPage)
+    if (level === "II" && currentPage !== 1) setCurrentPhoto((currentPhoto) => currentPhoto + 1);
+
   };
 
   const increaseScore = async () => {
@@ -117,7 +162,9 @@ export default function RememberTheFace({ navigation }) {
           nextPage={nextPage}
           shuffle={shuffle}
           currentPage={currentPage}
-          photoToShow={picArrayState[currentPage]}
+          currentPhoto={currentPhoto}
+          photoToShow={picArrayState[currentPhoto]}
+          photoToShow2={picArrayState[currentPhoto + 1]}
           score={score}
         />
       );

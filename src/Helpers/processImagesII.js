@@ -16,11 +16,6 @@ const processImagesIII = async (imagesArray) => {
   const secondRightAnswerArrayIndex = arrayOfIndexes.pop();
 
   await imagesArray.forEach((docSnapshot, index) => {
-    console.log(
-      "indexes",
-      firstRightAnswerArrayIndex,
-      secondRightAnswerArrayIndex
-    );
     for (let i = 0; i < docSnapshot.data().photos.length; i++) {
       if (index === firstRightAnswerArrayIndex) {
         firstSubjectPicsArray.push({

@@ -3,32 +3,65 @@ import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import "firebase/firestore";
 import ScoreResult from "../ScoreResult";
 
+let numberOfPages;
+
 export default function Page({
   navigation,
   game,
   answer,
   nextPage,
+  level,
   shuffle,
   currentPage,
+  currentPhoto,
   photoToShow,
+  photoToShow2,
   score,
   loading,
   correctAnswer,
 }) {
+  if (level === "I") numberOfPages = 10;
+  else if (level === "II") numberOfPages = 15;
+
   return (
     <>
       <View>
         <>
+        {console.log("current page", currentPage)}
+        {console.log("current photo", currentPhoto)}
+
           {currentPage === 0 && (
             <>
               <View style={styles.container}>
-                <Image
-                  style={styles.image}
-                  source={{
-                    uri: photoToShow.url,
-                  }}
-                />
-                <Text style={styles.text}>Remember this face</Text>
+                {level === "I" && (
+                  <>
+                    <Text style={styles.text}>Remember this face</Text>
+                    <Image
+                      style={styles.image}
+                      source={{
+                        uri: photoToShow.url,
+                      }}
+                    />
+                  </>
+                )}
+                {level === "II" && (
+                  <>
+                    <Text style={styles.text}>Remember these faces</Text>
+                    <Image
+                      style={styles.imageII}
+                      source={{
+                        uri: photoToShow.url,
+                      }}
+                    />
+                    <Image
+                      style={styles.imageII}
+                      source={{
+                        uri: photoToShow2.url,
+                      }}
+                    />
+                  </>
+                )}
+
                 <TouchableOpacity onPress={() => nextPage()}>
                   <Text style={styles.start}>Start</Text>
                 </TouchableOpacity>
@@ -39,7 +72,7 @@ export default function Page({
               </View>
             </>
           )}
-          {currentPage >= 1 && currentPage <= 10 && (
+          {currentPage >= 1 && currentPage <= numberOfPages && (
             <>
               <View style={styles.container}>
                 <Image
@@ -48,7 +81,9 @@ export default function Page({
                     uri: photoToShow.url,
                   }}
                 />
-                <Text style={styles.text}>Is this the face you saw?</Text>
+              {level === "I" && <Text style={styles.text}>Is this the face you saw?</Text>}
+              {level === "II" && <Text style={styles.text}>Is this one of the faces you saw?</Text>}
+
                 {loading && correctAnswer === true && (
                   <Text style={styles.correctAnswer}>Correct ✔</Text>
                 )}
@@ -72,7 +107,7 @@ export default function Page({
               </View>
             </>
           )}
-          {currentPage === 11 && (
+          {currentPage === numberOfPages + 1 && (
             <>
               <ScoreResult navigation={navigation} game={game} score={score} />
             </>
@@ -82,9 +117,12 @@ export default function Page({
     </>
   );
 }
+
 const styles = StyleSheet.create({
   text: { marginBottom: 20, textAlign: "center", maxWidth: "90%" },
   image: { width: 300, height: 300, marginBottom: 20, alignItems: "center" },
+  imageII: { width: 230, height: 180, marginBottom: 20, alignItems: "center" },
+
   container: { alignItems: "center" },
   quote: {
     textAlign: "center",
