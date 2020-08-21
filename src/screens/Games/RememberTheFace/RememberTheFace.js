@@ -5,9 +5,10 @@ import Page from "./Page";
 import * as firebase from "firebase";
 import "firebase/firestore";
 import processImages from "../../../Helpers/processImages.js";
+import processImagesII from "../../../Helpers/processImagesII.js";
 
 export default function RememberTheFace({ navigation }) {
-  const { game } = navigation.state.params;
+  const { game, level } = navigation.state.params;
   const [score, setScore] = useState(0);
   const [picArrayState, setPicArrayState] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
@@ -15,6 +16,7 @@ export default function RememberTheFace({ navigation }) {
   const [loading, setLoading] = useState(false);
   const store = firebase.firestore();
   const londonFacesRef = store.collection("london_faces");
+  const asianGirlsRef = store.collection("asian_girls");
   const pageArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
   const typeArray = [
@@ -46,16 +48,26 @@ export default function RememberTheFace({ navigation }) {
 
   const genderArray = ["male", "female"];
   const randomTypeIndex = Math.floor(Math.random() * typeArray.length);
-  const randomGenderIndex = Math.floor(Math.random() * genderArray.length);
 
   async function getAllImages() {
     console.log("type is gonna be: ", typeArray[randomTypeIndex]);
-    const imagesSnapshot = await londonFacesRef
-      .where("type", "==", typeArray[randomTypeIndex])
-      .get();
+    console.log("level here in getall", level);
+    let imagesSnapshot = [];
+    let imagesArray = [];
+    let slicedShuffledMixedArray = [];
 
-    const imagesArray = await imagesSnapshot.docs;
-    const slicedShuffledMixedArray = await processImages(imagesArray);
+    if (level === "I") {
+      imagesSnapshot = await londonFacesRef
+        .where("type", "==", typeArray[randomTypeIndex])
+        .get();
+      imagesArray = await imagesSnapshot.docs;
+      slicedShuffledMixedArray = await processImages(imagesArray);
+    } else if (level === "II") {
+      imagesSnapshot = await asianGirlsRef.get();
+      imagesArray = await imagesSnapshot.docs;
+      slicedShuffledMixedArray = await processImagesII(imagesArray);
+      // console.log("sliced back", slicedShuffledMixedArray)
+    }
     setPicArrayState(slicedShuffledMixedArray);
   }
 
@@ -100,6 +112,7 @@ export default function RememberTheFace({ navigation }) {
           loading={loading}
           correctAnswer={correctAnswer}
           game={game}
+          level={level}
           answer={answer}
           nextPage={nextPage}
           shuffle={shuffle}
@@ -110,6 +123,7 @@ export default function RememberTheFace({ navigation }) {
       );
     }
   });
+
   return (
     <>
       <Header navigation={navigation} />
