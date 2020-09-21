@@ -109,7 +109,7 @@ export default function Page({
           )}
           {currentPage === numberOfPages + 1 && (
             <>
-              <ScoreResult navigation={navigation} game={game} score={score} />
+              <ScoreResult navigation={navigation} game={game} score={score} totalQuestions={numberOfPages} />
             </>
           )}
         </>

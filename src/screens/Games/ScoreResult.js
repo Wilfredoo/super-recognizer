@@ -8,7 +8,9 @@ import {
 import React from "react";
 import "firebase/firestore";
 
-export default function ScoreResult({ navigation, game, score }) {
+
+//little change
+export default function ScoreResult({ navigation, game, score, totalQuestions }) {
   return (
     <>
       <View style={styles.container}>
@@ -16,7 +18,7 @@ export default function ScoreResult({ navigation, game, score }) {
           <Text style={styles.title}>You didn't make it (yet)</Text>
         )}
         <Text style={styles.text}>Right answers: {JSON.stringify(score)}</Text>
-        <Text style={styles.text}>Total questions: 10</Text>
+        <Text style={styles.text}>Total questions: {totalQuestions}</Text>
           <>
             <TouchableOpacity onPress={() => navigation.navigate("GameIntro", {
               game: game

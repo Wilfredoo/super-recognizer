@@ -123,9 +123,10 @@ export default function RememberTheFace({ navigation }) {
 
   const nextPage = () => {
     setCurrentPage((currentPage) => currentPage + 1);
-    console.log("current page", currentPage)
-    if (level === "II" && currentPage !== 1) setCurrentPhoto((currentPhoto) => currentPhoto + 1);
-
+    console.log("current page", currentPage);
+    if (level === "II" && currentPage === 0)
+      setCurrentPhoto((currentPhoto) => currentPhoto + 2);
+    else setCurrentPhoto((currentPhoto) => currentPhoto + 1);
   };
 
   const increaseScore = async () => {

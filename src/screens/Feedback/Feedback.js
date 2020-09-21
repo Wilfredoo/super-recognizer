@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import * as firebase from "firebase";
 
+// oh feedback
 export default function Feedback() {
   const store = firebase.firestore();
   const [name, setName] = useState("");

@@ -129,7 +129,7 @@ export default function Page({
           )}
           {currentPage === 10 && (
             <>
-              <ScoreResult navigation={navigation} game={game} score={score} />
+              <ScoreResult navigation={navigation} game={game} score={score} totalQuestions={10} />
             </>
           )}
         </>

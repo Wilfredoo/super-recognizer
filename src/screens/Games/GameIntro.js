@@ -40,29 +40,44 @@ export default function GameIntro({ navigation }) {
           </>
         )}
 
-        {(game === "WorldOfAverages" ||
-          game === "RememberTheFace") &&
-            levels.map((data) => {
-              return (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate(game, {
-                      game: game,
-                      level: data,
-                    })
-                  }
+        {(game === "WorldOfAverages" || game === "RememberTheFace") &&
+          levels.map((data) => {
+            return (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate(game, {
+                    game: game,
+                    level: data,
+                  })
+                }
+              >
+                <Text
+                  style={{
+                    paddingVertical: 10,
+                    paddingHorizontal: 18,
+                  }}
                 >
-                  <Text
-                    style={{
-                      paddingVertical: 10,
-                      paddingHorizontal: 18,
-                    }}
-                  >
-                    Level {data}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
+                  Level {data}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+
+        {game === "SpotTheImposter" &&
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate(game, {
+                    game: game,
+                  })
+                }
+              >
+                <Text
+                  style={styles.start}
+                >
+                  Start
+                </Text>
+              </TouchableOpacity>
+          }
       </View>
     </>
   );
@@ -89,4 +104,12 @@ const styles = StyleSheet.create({
     color: "gray",
     fontSize: 20,
   },
+  start: {
+    textAlign: "center",
+    margin: 20,
+    padding: 10,
+    backgroundColor: "#1b6ca8",
+    color: "#fff",
+    width: 200,
+  }
 });
