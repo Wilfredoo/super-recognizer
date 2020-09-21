@@ -4,6 +4,7 @@ import "firebase/firestore";
 import ScoreResult from "../ScoreResult";
 import shuffle from "../../../Helpers/shuffle";
 
+
 export default function Page({
   loading,
   correctAnswer,
