@@ -1,14 +1,32 @@
-Install dependencies
+```markdown
+# Super Recognizer 👁️  
+*A training app to improve facial recognition skills.*
 
-formik
-@react-navigation/native
-@react-native-community/masked-view
-react-native-reanimated
-react-native-screens
-yup
-react-native-keyboard-avoiding-scroll-view
-react-native-gesture-handler
-base-64
-react-navigation-stack
-react-navigation
-firebase
+Super Recognizer helps users enhance their ability to remember and distinguish faces through interactive exercises.
+
+## 🚀 Tech Stack  
+- **Frontend:** React Native, Expo  
+- **Backend:** Firebase (Auth, Firestore, Hosting)  
+
+## 🔧 Setup  
+1. Clone the repository  
+   ```bash
+   git clone https://github.com/Wilfredoo/super-recognizer.git
+   cd super-recognizer
+   ```
+2. Install dependencies  
+   ```bash
+   npm install
+   ```
+3. Start the app  
+   ```bash
+   expo start
+   ```
+
+## 🔥 Features  
+- Face recognition training exercises  
+- Tracks progress over time  
+- Firebase authentication & data storage  
+
+📍 **Live Version (APK):** [Download on APKPure](https://apkpure.com/super-recognizer/com.super_recognizer.super)  
+```
